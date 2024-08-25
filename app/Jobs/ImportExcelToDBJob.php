@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+class ImportExcelToDBJob implements ShouldQueue
+{
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
+
+    private $tableName;
+    private $data;
+
+    /**
+     * Create a new job instance.
+     */
+    public function __construct($tableName, $data)
+    {
+        $this->tableName = $tableName;
+        $this->data = $data;
+    }
+
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
+    {
+        $headers = array_shift($this->data);
+
+        if (Schema::hasTable($this->tableName)) {
+            /*кожний рядок окремо*/
+            /*foreach ($data as $row) {
+                $rowData = [];
+                foreach ($row as $key => $value) {
+                    $rowData[$headers[$key]] = $value;
+                }
+                DB::table($tableName)->insert($rowData);
+            }*/
+
+            /*пакетами по $batch штук*/
+            $batch = 500;
+            $counter = 0;
+            foreach ($this->data as $row) {
+                foreach ($row as $key => $value) {
+                    $rowData[$headers[$key]] = $value;
+                }
+                $rows[] = $rowData;
+
+                if (++$counter % $batch === 0) {
+                    DB::table($this->tableName)->insert($rows);
+                    $rows = [];
+                }
+            }
+
+            if (!empty($rows)) {
+                DB::table($this->tableName)->insert($rows);
+            }
+        }
+    }
+}

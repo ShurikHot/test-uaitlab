@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImportExcelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('import-excel', [\App\Http\Controllers\ImportExcelController::class, 'import']);
+Route::get('import-excel', [ImportExcelController::class, 'import']);
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');

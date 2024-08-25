@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\ExcelTableImport;
+use App\Jobs\ImportExcelToDBJob;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ use Exception;
 
 class ImportExcelController extends Controller
 {
-    public function import()
+    public function import(): void
     {
         $files = [
             'warranty_claims' => 'warranty_claims.xlsx',
@@ -26,15 +27,16 @@ class ImportExcelController extends Controller
         foreach ($files as $tableName => $fileName) {
             $path = storage_path("app/public/excel-files/$fileName");
 
-            $data = Excel::toArray(new ExcelTableImport(), $path);
+            $data = Excel::toArray([], $path);
             $headers = $data[0][0];
 
             $this->createTableFromHeaders($tableName, $headers);  // для автостворення таблиці, без міграції
-            $this->loadDataIntoTable($tableName, $data[0]);   // для заповнення таблиці
+//            $this->loadDataIntoTable($tableName, $data[0]);   // заповнення таблиці
+            ImportExcelToDBJob::dispatchSync($tableName, $data[0]);   //заповнення таблиці через джобу
         }
     }
 
-    protected function createTableFromHeaders(string $tableName, array $headers)
+    protected function createTableFromHeaders(string $tableName, array $headers): void
     {
         if (Schema::hasTable($tableName)) {
             DB::statement('PRAGMA foreign_keys = OFF'); //для sqlite
@@ -73,7 +75,7 @@ class ImportExcelController extends Controller
         }*/
     }
 
-    protected function loadDataIntoTable($tableName, $data)
+    protected function loadDataIntoTable(string $tableName, array $data): void
     {
         $headers = array_shift($data);
 
