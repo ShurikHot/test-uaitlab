@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 use Exception;
@@ -24,10 +25,11 @@ class ImportExcelController extends Controller
     {
         foreach (self::FILES as $tableName => $fileName) {
             $path = storage_path("app/public/excel-files/$fileName");
+            if (Storage::exists($path)) {
+                $data = Excel::toArray([], $path);
 
-            $data = Excel::toArray([], $path);
-
-            ImportExcelToDBJob::dispatchSync($tableName, $data[0]);   //заповнення таблиці
+                ImportExcelToDBJob::dispatchSync($tableName, $data[0]);   //заповнення таблиці
+            }
         }
     }
 }

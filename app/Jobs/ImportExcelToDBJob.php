@@ -38,7 +38,7 @@ class ImportExcelToDBJob implements ShouldQueue
         $headers = array_shift($this->data);
 
         if (Schema::hasTable($this->tableName)) {
-            /*пакетами по BATCH_SIZE штук*/
+            /*пакетами по BATCH_SIZE-штук*/
             $counter = 0;
             foreach ($this->data as $row) {
                 foreach ($row as $key => $value) {
