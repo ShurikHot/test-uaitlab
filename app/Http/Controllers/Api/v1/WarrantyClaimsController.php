@@ -4,73 +4,68 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Actions\DateFormatAction;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreWarrantyClaimRequest;
+use App\Models\WarrantyClaim;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class WarrantyClaimsController extends Controller
 {
-    public function getWarrantyClaims(DateFormatAction $dateFormatAction)
+    public function get(Request $request, DateFormatAction $dateFormatAction): JsonResponse
     {
-        $getParams = request()->all();
-        $query = DB::table('warranty_claims');
+        $query = WarrantyClaim::query();
 
-        if (!empty($getParams)) {
-            foreach ($getParams as $name => $value) {
-                switch ($name) {
-                    case 'date':
-                        $value = $dateFormatAction($value, 'd.m.Y');
-                        $query->where('date', $value);
-                        break;
-                    case 'datefrom':
-                        $value = $dateFormatAction($value, 'd.m.Y');
-                        $query->where('date', '>', $value);
-                        break;
-                    case 'dateto':
-                        $value = $dateFormatAction($value, 'd.m.Y');
-                        $value = $value ?: date('Y-m-d');
-                        $query->where('date', '<', $value);
-                        break;
-                    case 'status':
-                        $query->where('status', $value);
-                        break;
-                    case 'code_1c':
-                        if (is_array($value)) {
-                            $query->whereIn('code_1c', $value);
-                        } else {
-                            $query->where('code_1c', $value);
-                        }
-                        break;
-                }
+        if ($request->has('date') && $request->filled('date')) {
+            $value = $dateFormatAction($request->input('date'), 'd.m.Y');
+            $query->where('date', $value);
+        }
+
+        if ($request->has('datefrom') && $request->filled('datefrom')) {
+            $value = $dateFormatAction($request->input('datefrom'), 'd.m.Y');
+            $query->where('date', '>', $value);
+        }
+
+        if ($request->has('dateto')) {
+            $value = $dateFormatAction($request->input('dateto'), 'd.m.Y');
+            $value = $value ?: date('Y-m-d');
+            $query->where('date', '<', $value);
+        }
+
+        if ($request->has('status') && $request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->has('code_1c') && $request->filled('code_1c')) {
+            if (is_array($request->input('code_1c'))) {
+                $query->whereIn('code_1c', $request->input('code_1c'));
+            } else {
+                $query->where('code_1c', $request->input('code_1c'));
             }
-            $result = $query->get();
         }
 
-//        dd();
-        $codes = $result->pluck('code_1c')->toArray();
+        $warrantyClaims = $query->with(['serviceWorks', 'spareParts', 'technicalConclusions'])->get();
 
-        $relations = $this->getWarrantyRelations($codes);
-
-        if (count($result)) {
+        if ($warrantyClaims->isEmpty()) {
             return response()->json([
-                'success' => true,
-                'data' => $result,
-            ]);
+                'success' => false,
+                'message' => 'No data found for the given request',
+            ], 404);
         }
+
+        return response()->json([
+            'success' => true,
+            'data' => $warrantyClaims,
+        ]);
     }
 
-    public function getWarrantyRelations(array $codes)
+    public function store(StoreWarrantyClaimRequest $request): JsonResponse
     {
-        $tables = [
-            'technical_conclusions',
-            'warranty_claim_service_works',
-            'warranty_claim_spareparts'
-        ];
+        $data = $request->validated();
+        $warrantyClaim = WarrantyClaim::query()->create($data);
 
-        $relations = [];
-        foreach ($tables as $table) {
-            $query = DB::table('warranty_claims');
-
-
-        }
+        return response()->json([
+            'success' => true,
+            'data' => $warrantyClaim,
+        ]);
     }
 }

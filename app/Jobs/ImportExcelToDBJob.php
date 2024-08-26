@@ -17,6 +17,7 @@ class ImportExcelToDBJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
+    private const BATCH_SIZE = 500;
     private $tableName;
     private $data;
 
@@ -37,17 +38,7 @@ class ImportExcelToDBJob implements ShouldQueue
         $headers = array_shift($this->data);
 
         if (Schema::hasTable($this->tableName)) {
-            /*кожний рядок окремо*/
-            /*foreach ($data as $row) {
-                $rowData = [];
-                foreach ($row as $key => $value) {
-                    $rowData[$headers[$key]] = $value;
-                }
-                DB::table($tableName)->insert($rowData);
-            }*/
-
-            /*пакетами по $batch штук*/
-            $batch = 500;
+            /*пакетами по BATCH_SIZE штук*/
             $counter = 0;
             foreach ($this->data as $row) {
                 foreach ($row as $key => $value) {
@@ -55,7 +46,7 @@ class ImportExcelToDBJob implements ShouldQueue
                 }
                 $rows[] = $rowData;
 
-                if (++$counter % $batch === 0) {
+                if (++$counter % self::BATCH_SIZE === 0) {
                     DB::table($this->tableName)->insert($rows);
                     $rows = [];
                 }
