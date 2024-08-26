@@ -18,7 +18,9 @@ class AuthController extends Controller
         $data['password'] = Hash::make($data['password']);
         User::query()->create($data);
 
-        return response()->json(['message' => 'User registered successfully']);
+        return response()->json([
+            'message' => 'User registered successfully'
+        ]);
     }
 
     /**
@@ -35,13 +37,18 @@ class AuthController extends Controller
         }
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer'
+        ]);
     }
 
     public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
     }
 }
