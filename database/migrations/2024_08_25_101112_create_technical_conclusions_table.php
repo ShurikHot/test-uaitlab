@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('number_1c')->nullable();
             $table->dateTime('date')->nullable();
             $table->string('defect_codes_code_1c')->nullable();
-            $table->string('conclusion')->nullable();
-            $table->string('resolution')->nullable();
+            $table->text('conclusion')->nullable();
+            $table->text('resolution')->nullable();
             $table->string('symptom_codes_code_1c')->nullable();
             $table->string('warranty_claims_code_1c')->nullable();
             $table->foreign('warranty_claims_code_1c')->references('code_1c')->on('warranty_claims');

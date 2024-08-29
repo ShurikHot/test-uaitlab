@@ -7,8 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class ImportExcelToDBJob implements ShouldQueue
 {
@@ -42,7 +44,11 @@ class ImportExcelToDBJob implements ShouldQueue
             $counter = 0;
             foreach ($this->data as $row) {
                 foreach ($row as $key => $value) {
-                    $rowData[$headers[$key]] = $value;
+                    if (Str::contains($headers[$key], 'date')) {
+                        $rowData[$headers[$key]] = Carbon::createFromFormat('d.m.Y H:i:s', $value)->format('Y-m-d H:i:s');
+                    } else {
+                        $rowData[$headers[$key]] = $value;
+                    }
                 }
                 $rows[] = $rowData;
 

@@ -1,0 +1,60 @@
+/*admin css*/
+.label {
+    cursor: pointer;
+}
+
+.progress {
+    display: none;
+    margin-bottom: 1rem;
+}
+
+.img-container img {
+    max-width: 100%;
+}
+
+.brand-link img {
+    opacity: .8;
+}
+
+.list-mb0 {
+    margin-bottom: 0;
+}
+
+.w10 {
+    width: 10px
+}
+
+.w90 {
+    width: 90px
+}
+
+.w120 {
+    width: 120px
+}
+
+.w140 {
+    width: 140px
+}
+
+.weather-widget, .spotify {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.weather-icon {
+    width: 60px;
+    height: 60px;
+}
+
+.temperature {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.description {
+    color: #666;
+}

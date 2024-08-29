@@ -13,12 +13,12 @@ class WarrantyClaim extends Model
 
     public function serviceWorks()
     {
-        return $this->hasOne(WarrantyClaimServiceWork::class, 'warranty_claims_number_1c', 'number_1c');
+        return $this->hasMany(WarrantyClaimServiceWork::class, 'warranty_claims_number_1c', 'number_1c');
     }
 
     public function spareParts()
     {
-        return $this->hasOne(WarrantyClaimSparepart::class, 'warranty_claims_number_1c', 'number_1c');
+        return $this->hasMany(WarrantyClaimSparepart::class, 'warranty_claims_number_1c', 'number_1c');
     }
 
     public function technicalConclusions()

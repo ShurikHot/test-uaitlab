@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreWarrantyClaimRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the auth is authorized to make this request.
      */
     public function authorize(): bool
     {
@@ -22,8 +22,8 @@ class StoreWarrantyClaimRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code_1c' => 'required|string|nullable',
-            'number_1c' => 'required|string|nullable',
+            'code_1c' => 'string|nullable',
+            'number_1c' => 'string|nullable',
             'date' => 'date|nullable',
             'date_of_claim' => 'date|nullable',
             'date_of_sale' => 'date|nullable',
@@ -43,7 +43,7 @@ class StoreWarrantyClaimRequest extends FormRequest
             'service_partner' => 'string|nullable',
             'service_contract' => 'string|nullable',
             'product_article' => 'string|nullable',
-            'status' => 'boolean|nullable',
+            'status' => 'string|nullable',
             'spare_parts_sum' => 'decimal:2|nullable',
             'service_works_sum' => 'decimal:2|nullable',
         ];

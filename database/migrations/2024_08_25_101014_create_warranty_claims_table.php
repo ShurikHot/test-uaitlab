@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('comment')->nullable();
             $table->string('point_of_sale')->nullable();
             $table->string('product_name')->nullable();
-            $table->string('details')->nullable();
+            $table->text('details')->nullable();
             $table->string('manager')->nullable();
             $table->string('autor')->nullable();
             $table->string('client_name')->nullable();
@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('service_partner')->nullable();
             $table->string('service_contract')->nullable();
             $table->string('product_article')->nullable();
-            $table->boolean('status')->nullable();
+            $table->enum('status', ['Done', 'Ложь'])->default('Ложь')->nullable();
             $table->decimal('spare_parts_sum', 10, 2)->nullable();
             $table->decimal('service_works_sum', 10, 2)->nullable();
 

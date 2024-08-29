@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Actions\CodeNumberAction;
 use App\Actions\DateFormatAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWarrantyClaimRequest;
@@ -58,10 +59,23 @@ class WarrantyClaimsController extends Controller
         ]);
     }
 
-    public function store(StoreWarrantyClaimRequest $request): JsonResponse
+    public function store(StoreWarrantyClaimRequest $request, CodeNumberAction $codeNumberAction): JsonResponse
     {
         $data = $request->validated();
-        $warrantyClaim = WarrantyClaim::query()->create($data);
+        $data['code_1c'] = $codeNumberAction->getCode();
+        $data['number_1c'] = $codeNumberAction->getNumber();
+
+        try {
+            $warrantyClaim = WarrantyClaim::query()->firstOrCreate(
+                ['code_1c' => $data['code_1c'], 'number_1c' => $data['number_1c']],
+                $data
+            );
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create warranty claim',
+            ], 500);
+        }
 
         return response()->json([
             'success' => true,
