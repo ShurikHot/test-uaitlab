@@ -27,4 +27,15 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            if (!auth()->check()) {
+                return redirect()->route('home');
+            }
+        }
+
+        return parent::render($request, $exception);
+    }
 }

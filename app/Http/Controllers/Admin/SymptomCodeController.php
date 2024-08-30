@@ -12,15 +12,15 @@ use Illuminate\Http\RedirectResponse;
 
 class SymptomCodeController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
     public function index(BuildTreeAction $buildTreeAction)
     {
         $tree = $buildTreeAction->getTree('App\Models\SymptomCode');
+        $customTitle = ' :: Довідник кодів симптомів';
 
-        return view('admin.catalog.symptom-codes.index', compact('tree'));
+        return view('admin.catalog.symptom-codes.index', compact('tree', 'customTitle'));
     }
 
     /**
@@ -29,8 +29,9 @@ class SymptomCodeController extends Controller
     public function create(BuildTreeAction $buildTreeAction)
     {
         $tree = $buildTreeAction->getTree('App\Models\SymptomCode');
+        $customTitle = ' :: Створення нового коду симптому';
 
-        return view('admin.catalog.symptom-codes.create', compact('tree'));
+        return view('admin.catalog.symptom-codes.create', compact('tree', 'customTitle'));
     }
 
     /**
@@ -46,9 +47,7 @@ class SymptomCodeController extends Controller
 
         SymptomCode::query()->create($data);
 
-        $request->session()->flash('success', 'Новий код симптому створено');
-
-        return redirect()->route('symptom-codes.index');
+        return redirect()->route('symptom-codes.index')->with('success', 'Новий код симптому створено');
     }
 
     /**
@@ -65,10 +64,11 @@ class SymptomCodeController extends Controller
     public function edit(BuildTreeAction $buildTreeAction, SymptomCode $symptomCode)
     {
         $tree = $buildTreeAction->getTree('App\Models\SymptomCode');
+        $customTitle = ' :: Редагування коду симптому';
 
         $symptomCodeEdit = SymptomCode::query()->where('id', $symptomCode->id)->first()->toArray();
 
-        return view('admin.catalog.symptom-codes.edit', compact('tree', 'symptomCodeEdit'));
+        return view('admin.catalog.symptom-codes.edit', compact('tree', 'symptomCodeEdit', 'customTitle'));
     }
 
     /**
@@ -82,8 +82,7 @@ class SymptomCodeController extends Controller
 
         $symptomCode->update($data);
 
-        $request->session()->flash('success', 'Інформація оновлена');
-        return redirect()->route('symptom-codes.index');
+        return redirect()->route('symptom-codes.index')->with('success', 'Інформація оновлена');
     }
 
     /**
@@ -92,6 +91,7 @@ class SymptomCodeController extends Controller
     public function destroy(SymptomCode $symptomCode): RedirectResponse
     {
         $symptomCode->delete();
+
         return redirect()->route('symptom-codes.index')->with('success', 'Запис симптому видалено');
     }
 }

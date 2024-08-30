@@ -59,7 +59,7 @@ class WarrantyClaimsController extends Controller
         $to = min($warranties->currentPage() * $warranties->perPage(), $warranties->total());
         $totalPages = ceil($warranties->total() / $warranties->perPage());
 
-        $title = 'Гарантійні заявки';
+        $title = 'Гарантійні заяви';
 
         return view('front.warranty.index', compact('warranties', 'authors', 'from', 'to', 'totalPages', 'sortDirection', 'statuses', 'title'));
     }
@@ -71,7 +71,7 @@ class WarrantyClaimsController extends Controller
     {
         $authors = WarrantyClaim::query()->pluck('autor')->unique();
 
-        $title = 'Створення гарантійної заявки';
+        $title = 'Створення гарантійної заяви';
 
         return view('front.warranty.create', compact('title', 'authors'));
     }
@@ -84,6 +84,7 @@ class WarrantyClaimsController extends Controller
         $data = $request->validated();
         $data['code_1c'] = $codeNumberAction->getCode();
         $data['number_1c'] = $codeNumberAction->getNumber();
+        $data['status'] = 'Ложь';
 
         try {
             WarrantyClaim::query()->firstOrCreate(
@@ -91,10 +92,10 @@ class WarrantyClaimsController extends Controller
                 $data
             );
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Помилка створення гарантійної заявки');
+            return redirect()->back()->with('error', 'Помилка створення гарантійної заяви');
         }
 
-        return redirect()->route('warranty.index')->with('success', 'Гарантійна заявка успішно створена');
+        return redirect()->route('warranty.index')->with('success', 'Гарантійна заява успішно створена');
     }
 
     /**
@@ -113,7 +114,7 @@ class WarrantyClaimsController extends Controller
         $warranty = WarrantyClaim::query()->where('id', $id)->first();
         $authors = WarrantyClaim::query()->pluck('autor')->unique();
 
-        $title = 'Редагування гарантійної заявки';
+        $title = 'Редагування гарантійної заяви';
 
         return view('front.warranty.edit', compact('warranty', 'title', 'authors'));
     }
@@ -125,9 +126,13 @@ class WarrantyClaimsController extends Controller
     {
         $data = $request->validated();
 
-        WarrantyClaim::query()->where('id', $id)->update($data);
+        try {
+            WarrantyClaim::query()->where('id', $id)->update($data);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Помилка оновлення гарантійної заяви');
+        }
 
-        return redirect()->route('warranty.index')->with('success', 'Гарантійна заявка успішно оновлена');
+        return redirect()->route('warranty.index')->with('success', 'Гарантійна заява успішно оновлена');
     }
 
     /**

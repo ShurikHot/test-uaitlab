@@ -12,15 +12,15 @@ use Illuminate\Http\RedirectResponse;
 
 class DefectCodeController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
     public function index(BuildTreeAction $buildTreeAction)
     {
         $tree = $buildTreeAction->getTree('App\Models\DefectCode');
+        $customTitle = ' :: Довідник кодів дефектів';
 
-        return view('admin.catalog.defect-codes.index', compact('tree'));
+        return view('admin.catalog.defect-codes.index', compact('tree', 'customTitle'));
     }
 
     /**
@@ -29,8 +29,9 @@ class DefectCodeController extends Controller
     public function create(BuildTreeAction $buildTreeAction)
     {
         $tree = $buildTreeAction->getTree('App\Models\DefectCode');
+        $customTitle = ' :: Створення нового коду дефекту';
 
-        return view('admin.catalog.defect-codes.create', compact('tree'));
+        return view('admin.catalog.defect-codes.create', compact('tree', 'customTitle'));
     }
 
     /**
@@ -44,11 +45,12 @@ class DefectCodeController extends Controller
         $data['parent_id'] = $data['parent_id'] ?: '0';
         $data['created'] = date('Y-m-d H:m:s');
 
-        DefectCode::query()->create($data);
+        DefectCode::query()->firstOrCreate([
+            'code_1C' => $data['code_1C'],
+            $data
+        ]);
 
-        $request->session()->flash('success', 'Новий код дефекту створено');
-
-        return redirect()->route('defect-codes.index');
+        return redirect()->route('defect-codes.index')->with('success', 'Новий код дефекту створено');
     }
 
     /**
@@ -65,10 +67,11 @@ class DefectCodeController extends Controller
     public function edit(BuildTreeAction $buildTreeAction, DefectCode $defectCode)
     {
         $tree = $buildTreeAction->getTree('App\Models\DefectCode');
+        $customTitle = ' :: Редагування коду дефекту';
 
         $defectCodeEdit = DefectCode::query()->where('id', $defectCode->id)->first()->toArray();
 
-        return view('admin.catalog.defect-codes.edit', compact('tree', 'defectCodeEdit'));
+        return view('admin.catalog.defect-codes.edit', compact('tree', 'defectCodeEdit', 'customTitle'));
     }
 
     /**
@@ -82,8 +85,7 @@ class DefectCodeController extends Controller
 
         $defectCode->update($data);
 
-        $request->session()->flash('success', 'Інформація оновлена');
-        return redirect()->route('defect-codes.index');
+        return redirect()->route('defect-codes.index')->with('success', 'Інформація оновлена');
     }
 
     /**
@@ -92,6 +94,7 @@ class DefectCodeController extends Controller
     public function destroy(DefectCode $defectCode): RedirectResponse
     {
         $defectCode->delete();
+
         return redirect()->route('defect-codes.index')->with('success', 'Запис дефекту видалено');
     }
 }

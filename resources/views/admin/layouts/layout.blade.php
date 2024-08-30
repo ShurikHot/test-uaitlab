@@ -16,8 +16,6 @@
     <link rel="stylesheet" href="{{asset('assets/admin/plugins/bootstrap/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('assets/admin/css/style.css')}}">
 
-{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.css">--}}
-
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->

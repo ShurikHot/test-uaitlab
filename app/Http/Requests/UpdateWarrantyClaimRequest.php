@@ -22,7 +22,7 @@ class UpdateWarrantyClaimRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code_1c' => 'required|string',
+            'code_1c' => 'string|nullable',
             'number_1c' => 'required|string',
             'date' => 'date|nullable',
             'date_of_claim' => 'date|nullable',
