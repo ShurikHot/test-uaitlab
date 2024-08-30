@@ -48,9 +48,10 @@ class WarrantyClaimsController extends Controller
 
         if ($warrantyClaims->isEmpty()) {
             return response()->json([
-                'success' => false,
-                'message' => 'No data found for the given request',
-            ], 404);
+                'success' => true,
+                'message' => 'Request successful but no data available',
+                'data' => [],
+            ]);
         }
 
         return response()->json([
@@ -79,7 +80,8 @@ class WarrantyClaimsController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'Warranty claim created successfully',
             'data' => $warrantyClaim,
-        ]);
+        ], 201);
     }
 }

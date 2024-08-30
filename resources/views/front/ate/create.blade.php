@@ -30,148 +30,148 @@
                 </div>
             </div>
 
+                <div class="card-lists">
                     <div class="card-lists">
-                        <div class="card-lists">
-                            <div class="card-content card-form">
-                                <p class="card-title">Загальна інформація</p>
-                                <div class="inputs-group one-row">
-                                    <div class="form-group">
-                                        <label for="number_1c">Номер документу</label>
-                                        <input type="text" id="number_1c" name="number_1c" value="" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="date">Дата документу</label>
-                                        <input type="text" id="date" name="date" value="{{date('Y-m-d')}}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="factory-number">Відповідальний</label>
-                                        <input type="text" id="factory-number" value="" placeholder="Прізвище Ім'я По батькові">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="warranty_claim_number_1c">Документ-підстава</label>
-                                        <div class="input-wrapper">
-                                            <input type="text" id="warranty_claim_number_1c" name="warranty_claim_number_1c" value="" placeholder="Номер гарантійної заяви">
-                                        </div>
-                                    </div>
+                        <div class="card-content card-form">
+                            <p class="card-title">Загальна інформація</p>
+                            <div class="inputs-group one-row">
+                                <div class="form-group">
+                                    <label for="number_1c">Номер документу</label>
+                                    <input type="text" id="number_1c" name="number_1c" value="" readonly>
                                 </div>
-                                <div class="inputs-group one-row">
-                                    <div class="form-group">
-                                        <label for="field-1">ПІБ покупця</label>
-                                        <input type="text" id="field-1" value="" placeholder="Місце продажу">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="field-2">Контактний телефон</label>
-                                        <input type="text" id="field-2" value="" placeholder="+38ХХХХХХХХХХ">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="field-3">Артикул</label>
-                                        <input type="text" id="field-3" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="field-4">Назва виробу</label>
-                                        <input type="text" id="field-4" value="">
-                                    </div>
+                                <div class="form-group">
+                                    <label for="date">Дата документу</label>
+                                    <input type="text" id="date" name="date" value="{{date('Y-m-d')}}" readonly>
                                 </div>
-                                <div class="inputs-group one-row">
-                                    <div class="form-group">
-                                        <label for="place-sale">Місце продажу</label>
-                                        <input type="text" id="place-sale" value="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="date-sale">Дата продажу</label>
-                                        <input type="text" id="date-sale" value=""  placeholder="РРРР-ММ-ДД" class="_js-datepicker">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="date-start">Дата звернення в сервісний центр</label>
-                                        <input type="text" id="date-start" value="" placeholder="РРРР-ММ-ДД" class="_js-datepicker">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="receipt-number">Номер квитанції сервісного центру</label>
-                                        <input type="text" id="receipt-number" value="">
+                                <div class="form-group">
+                                    <label for="factory-number">Відповідальний</label>
+                                    <input type="text" id="factory-number" value="" placeholder="Прізвище Ім'я По батькові">
+                                </div>
+                                <div class="form-group">
+                                    <label for="warranty_claim_number_1c">Документ-підстава</label>
+                                    <div class="input-wrapper">
+                                        <input type="text" id="warranty_claim_number_1c" name="warranty_claim_number_1c" value="" placeholder="Номер гарантійної заяви">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-lists">
-                            <div class="card-lists">
-                                <div class="card-content card-form">
-                                    <p class="card-title">Технічна інформація</p>
-                                    <div class="inputs-group one-row">
-                                        <div class="form-group">
-                                            <label for="field-5">Заводський номер</label>
-                                            <input type="text" id="field-5" value="">
-
-                                        </div>
-
-                                        <div class="form-group default-select">
-                                            <label for="defect_codes_code_1c">Код дефекту</label>
-                                            <select name="defect_codes_code_1c" id="defect_codes_code_1c">
-                                                <option value="-1">Код дефекту</option>
-                                                @if($defectCodes)
-                                                    @foreach($defectCodes as $parentDefectCode)
-                                                        <option class="text-blue text-bold" value="{{ $parentDefectCode['code_1C'] }}" disabled>
-                                                            {{ $parentDefectCode['name'] }}
-                                                        </option>
-                                                        @if(isset($parentDefectCode['children']))
-                                                            @foreach($parentDefectCode['children'] as $childDefectCode)
-                                                                <option class="" value="{{ $childDefectCode['code_1C'] }}">
-                                                                    {{ $childDefectCode['name'] }}
-                                                                </option>
-                                                            @endforeach
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group default-select">
-                                            <label for="symptom_codes_code_1c">Код симптому</label>
-                                            <select name="symptom_codes_code_1c" id="symptom_codes_code_1c">
-                                                <option value="-1">Код симптому</option>
-                                                @if($symptomCodes)
-                                                    @foreach($symptomCodes as $parentSymptomCode)
-                                                        <option class="text-blue text-bold" value="{{ $parentSymptomCode['code_1C'] }}" disabled>
-                                                            {{ $parentSymptomCode['name'] }}
-                                                        </option>
-                                                        @if(isset($parentSymptomCode['children']))
-                                                            @foreach($parentSymptomCode['children'] as $childSymptomCode)
-                                                                <option class="" value="{{ $childSymptomCode['code_1C'] }}">
-                                                                    {{ $childSymptomCode['name'] }}
-                                                                </option>
-                                                            @endforeach
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group default-select">
-                                            <label for="appeal_type">Тип звернення</label>
-                                            <select name="appeal_type" id="appeal_type">
-                                                <option value="-1">Тип звернення</option>
-                                                @if($appealTypes->isNotEmpty())
-                                                    @foreach($appealTypes as $appealType)
-                                                        <option value="{{ $appealType }}">{{ $appealType }}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="inputs-group one-row">
-                                        <div class="form-group">
-                                            <label for="conclusion">Висновок</label>
-                                            <textarea id="conclusion" name="conclusion" placeholder="Причина дефекту" rows="3"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="resolution">Резолюція</label>
-                                            <textarea id="resolution" name="resolution" placeholder="Причина дефекту" rows="3"></textarea>
-                                        </div>
-                                    </div>
-
+                            <div class="inputs-group one-row">
+                                <div class="form-group">
+                                    <label for="field-1">ПІБ покупця</label>
+                                    <input type="text" id="field-1" value="" placeholder="Місце продажу">
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-2">Контактний телефон</label>
+                                    <input type="text" id="field-2" value="" placeholder="+38ХХХХХХХХХХ">
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-3">Артикул</label>
+                                    <input type="text" id="field-3" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="field-4">Назва виробу</label>
+                                    <input type="text" id="field-4" value="">
+                                </div>
+                            </div>
+                            <div class="inputs-group one-row">
+                                <div class="form-group">
+                                    <label for="place-sale">Місце продажу</label>
+                                    <input type="text" id="place-sale" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="date-sale">Дата продажу</label>
+                                    <input type="text" id="date-sale" value=""  placeholder="РРРР-ММ-ДД" class="_js-datepicker">
+                                </div>
+                                <div class="form-group">
+                                    <label for="date-start">Дата звернення в сервісний центр</label>
+                                    <input type="text" id="date-start" value="" placeholder="РРРР-ММ-ДД" class="_js-datepicker">
+                                </div>
+                                <div class="form-group">
+                                    <label for="receipt-number">Номер квитанції сервісного центру</label>
+                                    <input type="text" id="receipt-number" value="">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="card-lists">
+                        <div class="card-lists">
+                            <div class="card-content card-form">
+                                <p class="card-title">Технічна інформація</p>
+                                <div class="inputs-group one-row">
+                                    <div class="form-group">
+                                        <label for="field-5">Заводський номер</label>
+                                        <input type="text" id="field-5" value="">
+
+                                    </div>
+
+                                    <div class="form-group default-select">
+                                        <label for="defect_codes_code_1c">Код дефекту</label>
+                                        <select name="defect_codes_code_1c" id="defect_codes_code_1c">
+                                            <option value="-1">Код дефекту</option>
+                                            @if($defectCodes)
+                                                @foreach($defectCodes as $parentDefectCode)
+                                                    <option class="text-blue text-bold" value="{{ $parentDefectCode['code_1C'] }}" disabled>
+                                                        {{ $parentDefectCode['name'] }}
+                                                    </option>
+                                                    @if(isset($parentDefectCode['children']))
+                                                        @foreach($parentDefectCode['children'] as $childDefectCode)
+                                                            <option class="" value="{{ $childDefectCode['code_1C'] }}">
+                                                                {{ $childDefectCode['name'] }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group default-select">
+                                        <label for="symptom_codes_code_1c">Код симптому</label>
+                                        <select name="symptom_codes_code_1c" id="symptom_codes_code_1c">
+                                            <option value="-1">Код симптому</option>
+                                            @if($symptomCodes)
+                                                @foreach($symptomCodes as $parentSymptomCode)
+                                                    <option class="text-blue text-bold" value="{{ $parentSymptomCode['code_1C'] }}" disabled>
+                                                        {{ $parentSymptomCode['name'] }}
+                                                    </option>
+                                                    @if(isset($parentSymptomCode['children']))
+                                                        @foreach($parentSymptomCode['children'] as $childSymptomCode)
+                                                            <option class="" value="{{ $childSymptomCode['code_1C'] }}">
+                                                                {{ $childSymptomCode['name'] }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group default-select">
+                                        <label for="appeal_type">Тип звернення</label>
+                                        <select name="appeal_type" id="appeal_type">
+                                            <option value="">Тип звернення</option>
+                                            @if($appealTypes->isNotEmpty())
+                                                @foreach($appealTypes as $appealType)
+                                                    <option value="{{ $appealType }}">{{ $appealType }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="inputs-group one-row">
+                                    <div class="form-group">
+                                        <label for="conclusion">Висновок</label>
+                                        <textarea id="conclusion" name="conclusion" placeholder="Причина дефекту" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="resolution">Резолюція</label>
+                                        <textarea id="resolution" name="resolution" placeholder="Причина дефекту" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -448,8 +448,6 @@
         </div>
     </div>
 
-
     <div id="datepicker-container"></div>
-
 
 @endsection

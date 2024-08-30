@@ -163,7 +163,11 @@ class TechnicalConclusionsController extends Controller
     {
         $data = $request->validated();
 
-        TechnicalConclusion::query()->where('id', $id)->update($data);
+        try {
+            TechnicalConclusion::query()->where('id', $id)->update($data);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Помилка оновлення АТЕ');
+        }
 
         return redirect()->route('ate.index')->with('success', 'АТЕ успішно оновлена');
     }

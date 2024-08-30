@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\SymptomCodeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Crm\FrontController;
 use App\Http\Controllers\Crm\TechnicalConclusionsController;
 use App\Http\Controllers\Crm\WarrantyClaimsController;
 use App\Http\Controllers\ImportExcelController;
@@ -26,8 +25,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function 
 });
 
 Route::middleware('guest')->prefix('crm')->group(function () {
-    Route::get('login', [FrontController::class, 'loginForm'])->name('crm.loginForm');
-    Route::post('login', [FrontController::class, 'login'])->name('crm.login');
+    Route::post('login', [AuthController::class, 'login'])->name('crm.login');
 });
 Route::get('logout', [AuthController::class, 'logout'])->middleware(['auth'])->name('logout');
 

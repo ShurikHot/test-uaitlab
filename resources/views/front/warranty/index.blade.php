@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                             <div style="text-align: center; margin-top: 10px">
-                                <button class="btn-primary btn-blue" type="submit">Застосувати фільтри</button>
+                                <button class="btn-border btn-blue" type="submit">Застосувати фільтри</button>
                             </div>
                         </form>
                     </div>
@@ -469,20 +469,20 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <picture>
-                            <source srcset="./img/delete/gallery-img.webp" type="image/webp">
-                            <img src="./img/delete/gallery-img.jpg" loading="lazy" alt="" title="">
+                            <source srcset="{{asset('assets/front/img/delete/gallery-img.webp')}}" type="image/webp">
+                            <img src="{{asset('assets/front/img/delete/gallery-img.jpg')}}" loading="lazy" alt="" title="">
                         </picture>
                     </div>
                     <div class="swiper-slide">
                         <picture>
-                            <source srcset="./img/delete/gallery-img.webp" type="image/webp">
-                            <img src="./img/delete/gallery-img.jpg" loading="lazy" alt="" title="">
+                            <source srcset="{{asset('assets/front/img/delete/gallery-img.webp')}}" type="image/webp">
+                            <img src="{{asset('assets/front/img/delete/gallery-img.jpg')}}" loading="lazy" alt="" title="">
                         </picture>
                     </div>
                     <div class="swiper-slide">
                         <picture>
-                            <source srcset="./img/delete/gallery-img.webp" type="image/webp">
-                            <img src="./img/delete/gallery-img.jpg" loading="lazy" alt="" title="">
+                            <source srcset="{{asset('assets/front/img/delete/gallery-img.webp')}}" type="image/webp">
+                            <img src="{{asset('assets/front/img/delete/gallery-img.jpg')}}" loading="lazy" alt="" title="">
                         </picture>
                     </div>
                 </div>

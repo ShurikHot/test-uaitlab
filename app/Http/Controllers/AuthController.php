@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -14,32 +13,14 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function registerForm()
-    {
-        return view('auth.create');
-    }
-
-    public function register(RegisterRequest $request): RedirectResponse
-    {
-        $data = $request->validated();
-        $data['password'] = Hash::make($data['password']);
-
-        $user = User::query()->create($data);
-        Auth::login($user);
-        return redirect()->route('admin.index');
-    }
-
-    public function loginForm()
-    {
-        return view('auth.login');
-    }
-
     public function login(LoginRequest $request): RedirectResponse
     {
         $data = $request->validated();
-
         if (Auth::attempt($data)) {
-            return redirect()->route('admin.index');
+            if (Auth::user()->is_admin) {
+                return redirect()->route('users.index');
+            }
+            return redirect()->route('warranty.index');
         } else {
             return redirect()->back()->with('error', 'Неправильний логін чи пароль');
         }

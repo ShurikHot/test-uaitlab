@@ -35,7 +35,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="author">Відповідальний</label>
-                                <input type="text" id="author" value="Прізвище Ім'я По батькові" readonly>
+                                {{--                            <input type="text" id="author" value="Прізвище Ім'я По батькові" readonly>--}}
+                                <select name="author" id="author">
+                                    <option selected value="">Автор документу</option>
+                                    @if($authors->isNotEmpty())
+                                        @foreach($authors as $author)
+                                            <option value="{{ $author }}" {{ (old('autor', $warranty->autor ?? '') == $author) ? 'selected' : '' }}>{{ $author }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
                             <div class="form-group required default-select" data-valid="vanilla-select">
                                 <label for="service-center">Сервісний центр</label>
@@ -258,7 +266,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="client_phone">Контактний телефон</label>
-                                    <input type="text" id="client_phone" name="client_phone" value="+{{ old('client_phone', $warranty->client_phone ?? '') }}" placeholder="+38xxxxxxxxxx">
+                                    <input type="text" id="client_phone" name="client_phone" value="{{ old('client_phone', $warranty->client_phone ?? '') }}" placeholder="+38xxxxxxxxxx">
                                 </div>
                             </div>
                         </div>
@@ -274,7 +282,7 @@
                                 </div>
                                 <div class="form-group required" data-required data-valid="empty">
                                     <label for="sender_phone">Контактний телефон</label>
-                                    <input type="text" id="sender_phone" name="sender_phone" value="+{{ old('sender_phone', $warranty->sender_phone ?? '') }}" placeholder="+38XXXXXXXXXX">
+                                    <input type="text" id="sender_phone" name="sender_phone" value="{{ old('sender_phone', $warranty->sender_phone ?? '') }}" placeholder="+38XXXXXXXXXX">
                                     <div class="help-block" data-empty="Required field"></div>
                                 </div>
                             </div>
@@ -297,7 +305,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="barcode">Штрихкод гарантійного талону</label>
-                                <input type="text" id="barcode" value="0000000000" readonly>
+                                <input type="text" id="barcode" placeholder="0000000000">
                             </div>
                         </div>
                         <div class="inputs-group one-row">

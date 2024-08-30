@@ -23,7 +23,7 @@ class StoreSymptomCodeRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'parent_id' => 'nullable|string|exists:defect_codes,code_1C'
+            'parent_id' => 'nullable|string|exists:symptom_codes,code_1C'
         ];
     }
 }

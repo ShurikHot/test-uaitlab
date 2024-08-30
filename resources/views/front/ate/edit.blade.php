@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="field-2">Контактний телефон</label>
-                                        <input type="text" id="field-2" value="+{{$technicalConclusion->warrantyClaim->client_phone}}" readonly>
+                                        <input type="text" id="field-2" value="{{$technicalConclusion->warrantyClaim->client_phone}}" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="field-3">Артикул</label>
@@ -459,6 +459,5 @@
 
 
     <div id="datepicker-container"></div>
-
 
 @endsection

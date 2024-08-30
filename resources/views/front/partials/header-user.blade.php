@@ -45,7 +45,7 @@
         <div class="user-info">
             <img src="{{asset('assets/front/img/components/user-undefined.svg')}}" alt="">
             <div class="user-name">{{auth()->user()->name}}</div>
-            <div class="user-role">Роль</div>
+            <div class="user-role">Роль: @if(auth()->user()->is_admin) ADMIN @else NOT ADMIN @endif</div>
 
             <button type="button" class="icon-arrow-dropdown"></button>
         </div>
@@ -53,7 +53,7 @@
             <div class="user-header__dropdown-content">
                 <div class="dropdown-top">
                     <div class="user-name">{{auth()->user()->name}}</div>
-                    <div class="user-role">Роль</div>
+                    <div class="user-role">Роль: @if(auth()->user()->is_admin) ADMIN @else NOT ADMIN @endif</div>
                 </div>
                 <div class="dropdown-footer">
                     <a href="{{route('logout')}}" class="btn-primary btn-blue" type="button">Вийти</a>
