@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Actions\CodeNumberAction;
-use App\Actions\DateFormatAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWarrantyClaimRequest;
 use App\Models\WarrantyClaim;
@@ -12,24 +11,23 @@ use Illuminate\Http\Request;
 
 class WarrantyClaimsController extends Controller
 {
-    public function get(Request $request, DateFormatAction $dateFormatAction): JsonResponse
+    public function get(Request $request): JsonResponse
     {
         $query = WarrantyClaim::query();
-
         if ($request->has('date') && $request->filled('date')) {
-            $value = $dateFormatAction($request->input('date'), 'd.m.Y');
-            $query->where('date', $value);
+            $value = $request->input('date');
+            $query->whereDate('date', $value);
         }
 
         if ($request->has('datefrom') && $request->filled('datefrom')) {
-            $value = $dateFormatAction($request->input('datefrom'), 'd.m.Y');
-            $query->where('date', '>', $value);
+            $value = $request->input('datefrom');
+            $query->whereDate('date', '>', $value);
         }
 
         if ($request->has('dateto')) {
-            $value = $dateFormatAction($request->input('dateto'), 'd.m.Y');
+            $value = $request->input('dateto');
             $value = $value ?: date('Y-m-d');
-            $query->where('date', '<', $value);
+            $query->whereDate('date', '<', $value);
         }
 
         if ($request->has('status') && $request->filled('status')) {
@@ -51,7 +49,7 @@ class WarrantyClaimsController extends Controller
                 'success' => true,
                 'message' => 'Request successful but no data available',
                 'data' => [],
-            ]);
+            ], 204);
         }
 
         return response()->json([

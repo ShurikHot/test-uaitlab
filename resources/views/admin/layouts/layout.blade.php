@@ -28,7 +28,11 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{url('/')}}" class="nav-link">Home</a>
+                <div class="d-flex justify-content-between">
+                    <a href="{{url('/')}}" class="nav-link">Home</a>
+                    <a href="{{url('/import-excel')}}" class="nav-link ml-5 bg-cyan rounded">Імпортувати данні з таблиць</a>
+                    <a href="{{url('/import-sql')}}" class="nav-link ml-5 bg-fuchsia rounded">Імпортувати довідники з дампу</a>
+                </div>
             </li>
         </ul>
     </nav>

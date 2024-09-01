@@ -1,0 +1,225 @@
+openapi: 3.0.3
+info:
+  title: UAITLAB
+  version: 1.0.0
+servers:
+  - url: http://uaitlab/api/v1/
+paths:
+  /token:
+    post:
+      summary: Returns the registered user's token
+      tags:
+        - Token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: "example@example.com"
+                password:
+                  type: string
+                  example: "password"
+      responses:
+        '200':
+          description: Method returns the registered user's token.
+          content:
+            application/json:
+              example:
+                access_token: "1|E5LqnEz8C7XuS7s6AE19QXJPL4fNc8Fk1LJCBuAO65e819f4"
+                token_type: 'Bearer'
+  /warranty-claims:
+    get:
+      summary: Returns warranty-claims data from a database
+      tags:
+        - Warranty claims
+      parameters:
+        - name: Token
+          in: header
+          required: true
+          description: Token
+          schema:
+            type: string
+          example: "1|E5LqnEz8C7XuS7s6AE19QXJPL4fNc8Fk1LJCBuAO65e819f4"
+        - in: query
+          name: date
+          schema:
+            type: string
+          description: Specify the date of the warranty claim you would like to receive
+          example: 2024-01-10
+        - in: query
+          name: datefrom
+          schema:
+            type: string
+          description: Specify from what date you would like to receive warranty claims
+          example: 2023-07-15
+        - in: query
+          name: dateto
+          schema:
+            type: string
+          description: Specify to what date you would like to receive warranty claims
+          example: 2024-07-19
+        - in: query
+          name: status
+          schema:
+            type: string
+          description: Specify with what status you would like to receive warranty claims
+          example: 'Done'
+        - in: query
+          name: code_1c
+          schema:
+            type: string
+          description: Specify with what code (1C) you would like to receive warranty claims
+          example: 'e6f3aa63-b073-11ee-ba9f-00155d001307'
+      description: You can specify the parameters such as **date**, **datefrom**, **dateto**, **status** and **code_1c**, which correspond to the date, status and code (1C)
+      responses:
+        '200':
+          description: Returns warranty claims data and related technical inspection reports
+          content:
+            application/json:
+              example:
+                success: true
+                data: '[
+                  {
+                    "id": 3,
+                    "code_1c": "9182c36e-aa0b-11ee-ba9f-00155d001307",
+                    "number_1c": "emg-0017050",
+                    "date": "2024-01-03 09:35:30",
+                    "date_of_claim": "2023-12-27 00:00:00",
+                    "date_of_sale": "2023-06-07 00:00:00",
+                    "factory_number": "2A18-000471",
+                    "comment": null,
+                    "point_of_sale": "ТОВ ІНСТРУМЕНТАРІУМ СЕРВІС",
+                    "product_name": "Насос заглибний високого тиску DIVE 6500/34 Premium",
+                    "details": "Насос не качає.\n----------------------------------------\nПопадання води в двигун через сальникове ущільнення, що призвело до закорочування вобмотках єлектродвигуна. Вал ротора крутиться легко, але чути характерний звук пошкодженного підшипника.\n----------------------------------------\nГарантійний випадок\nПідлягає поверненню в точку продажу.\nРемонт не можливий у зв’язку з відсутністю необхідних запасних частин на складі постачальника.",
+                    "manager": "Олег Тимощук",
+                    "autor": "Олег Тимощук",
+                    "client_name": "Український О.",
+                    "sender_name": "Український О.",
+                    "client_phone": "380631235788",
+                    "sender_phone": "380631234569",
+                    "type_of_claim": "ВозвратОбмен",
+                    "receipt_number": "Онлайн",
+                    "service_partner": "900005063",
+                    "service_contract": "2195548",
+                    "product_article": "113884",
+                    "status": "Done",
+                    "spare_parts_sum": "0.00",
+                    "service_works_sum": "225.00",
+                    "created_at": null,
+                    "updated_at": null,
+                    "service_works": [
+                      {
+                        "id": 559,
+                        "code_1c": "fbe645c3-25ec-4eea-922f-819adfa3f0b2",
+                        "warranty_claims_number_1c": "emg-0017050",
+                        "line_number": "1",
+                        "articul": null,
+                        "product": "Діагностика",
+                        "qty": "0.75",
+                        "price": "300.00",
+                        "sum": "225.00",
+                        "created_at": null,
+                        "updated_at": null
+                      }
+                    ],
+                    "spare_parts": [],
+                    "technical_conclusions": {
+                      "id": 13,
+                      "code_1c": "9182c36c-aa0b-11ee-ba9f-00155d001307",
+                      "number_1c": "ema-0017050",
+                      "date": "2024-01-03 09:35:30",
+                      "defect_codes_code_1c": "5db64b71-4128-11ec-ba91-00155d001307",
+                      "conclusion": "Попадання води в двигун через сальникове ущільнення, що призвело до закорочування вобмотках єлектродвигуна. Вал ротора крутиться легко, але чути характерний звук пошкодженного підшипника.",
+                      "resolution": "Гарантійний випадок\nПідлягає поверненню в точку продажу.\nРемонт не можливий у зв’язку з відсутністю необхідних запасних частин на складі постачальника.\n",
+                      "symptom_codes_code_1c": "c6b2538b-425f-11ec-ba91-00155d001307",
+                      "warranty_claims_code_1c": "9182c36e-aa0b-11ee-ba9f-00155d001307",
+                      "appeal_type": "ВозвратОбмен",
+                      "created_at": null,
+                      "updated_at": null
+                    }
+                  }]'
+        '204':
+          description: Request accepted but no data available
+          content:
+            application/json:
+              example:
+                success: true
+                message: Request successful but no data available
+                data: []
+    post:
+      summary: Adding a warranty claim
+      tags:
+        - Warranty claims
+      parameters:
+        - name: Token
+          in: header
+          required: true
+          description: Token
+          schema:
+            type: string
+          example: "1|E5LqnEz8C7XuS7s6AE19QXJPL4fNc8Fk1LJCBuAO65e819f4"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code_1c
+                - number_1c
+              properties:
+                code_1c:
+                  type: string
+                  example: "9182c36c-aa0b-11ee-ba9f-00155d001307"
+                number_1c:
+                  type: string
+                  example: "ema-0017050"
+      responses:
+        '200':
+          description: New warranty claim successfully created
+          content:
+            application/json:
+              example:
+                success: true
+                message: Warranty claim created successfully
+                data: '"id": 3,
+                    "code_1c": "9182c36e-aa0b-11ee-ba9f-00155d001307",
+                    "number_1c": "emg-0017050",
+                    "date": "2024-01-03 09:35:30",
+                    "date_of_claim": "2023-12-27 00:00:00",
+                    "date_of_sale": "2023-06-07 00:00:00",
+                    "factory_number": "2A18-000471",
+                    "comment": null,
+                    "point_of_sale": "ТОВ ІНСТРУМЕНТАРІУМ СЕРВІС",
+                    "product_name": "Насос заглибний високого тиску DIVE 6500/34 Premium",
+                    "details": "Насос не качає.\n----------------------------------------\nПопадання води в двигун через сальникове ущільнення, що призвело до закорочування вобмотках єлектродвигуна. Вал ротора крутиться легко, але чути характерний звук пошкодженного підшипника.\n----------------------------------------\nГарантійний випадок\nПідлягає поверненню в точку продажу.\nРемонт не можливий у зв’язку з відсутністю необхідних запасних частин на складі постачальника.",
+                    "manager": "Олег Тимощук",
+                    "autor": "Олег Тимощук",
+                    "client_name": "Український О.",
+                    "sender_name": "Український О.",
+                    "client_phone": "380631235788",
+                    "sender_phone": "380631234569",
+                    "type_of_claim": "ВозвратОбмен",
+                    "receipt_number": "Онлайн",
+                    "service_partner": "900005063",
+                    "service_contract": "2195548",
+                    "product_article": "113884",
+                    "status": "Done",
+                    "spare_parts_sum": "0.00",
+                    "service_works_sum": "225.00",
+                    "created_at": null,
+                    "updated_at": null'
+        '500':
+          description: Failed to create warranty claim
+          content:
+            application/json:
+              example:
+                success: false
+                message: "Failed to create warranty claim"

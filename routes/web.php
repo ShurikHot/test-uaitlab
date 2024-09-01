@@ -4,10 +4,12 @@ use App\Http\Controllers\Admin\DefectCodeController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\SymptomCodeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\v1\TokenController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Crm\TechnicalConclusionsController;
 use App\Http\Controllers\Crm\WarrantyClaimsController;
 use App\Http\Controllers\ImportExcelController;
+use App\Http\Controllers\ImportSqlController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,7 +17,8 @@ Route::get('/', function () {
 })->middleware('guest')->name('home');
 
 Route::get('import-excel', [ImportExcelController::class, 'import']);
-Route::post('token', [AuthController::class, 'getToken']);
+Route::get('import-sql', [ImportSqlController::class, 'import']);
+Route::post('token', TokenController::class)->prefix('api/v1');
 
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
     Route::get('/', [MainController::class, 'index'])->name('admin.index');

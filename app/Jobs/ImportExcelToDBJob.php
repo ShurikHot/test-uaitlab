@@ -53,13 +53,13 @@ class ImportExcelToDBJob implements ShouldQueue
                 $rows[] = $rowData;
 
                 if (++$counter % self::BATCH_SIZE === 0) {
-                    DB::table($this->tableName)->insert($rows);
+                    DB::table($this->tableName)->insertOrIgnore($rows);
                     $rows = [];
                 }
             }
 
             if (!empty($rows)) {
-                DB::table($this->tableName)->insert($rows);
+                DB::table($this->tableName)->insertOrIgnore($rows);
             }
         }
     }
