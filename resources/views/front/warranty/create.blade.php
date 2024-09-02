@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label for="author">Відповідальний</label>
 {{--                            <input type="text" id="author" value="Прізвище Ім'я По батькові" readonly>--}}
-                            <select name="author" id="author">
+                            <select name="autor" id="author">
                                 <option selected value="">Автор документу</option>
                                 @if($authors->isNotEmpty())
                                     @foreach($authors as $author)
@@ -380,7 +380,7 @@
                         <div class="form-group default-select required" data-valid="vanilla-select">
                             <select name="" id="">
                                 <option value="-1">Якась група товару</option>
-                                <option value="1">Група товару - 1</option>
+                                <option value="1" selected>Група товару - 1</option>
                                 <option value="2">Група товару - 2</option>
                                 <option value="3">Група товару - 3</option>
                                 <option value="4">Група товару - 4</option>
@@ -511,18 +511,13 @@
 
                             </div>
 
-
-
                             <div class="display-grid col-2">
                                 <div class="form-group">
                                     <label for="comment-2">Опис додаткових робіт</label>
                                     <textarea name="comment_service" id="comment-2" placeholder="Якщо виконувалися додаткові роботи, які не відображені в списку до вибору, опишіть їх в цьому полі" rows="3"></textarea>
                                 </div>
                             </div>
-
                         </div>
-
-
                     </div>
                 </div>
                 <div class="card-content card-form used-parts">
@@ -530,10 +525,9 @@
                         <p class="card-title">Використані запчастини</p>
                         <div class="form-group have-icon">
                             <span class="icon icon-search-active"></span>
-                            <input type="text" placeholder="XXXXXX-XXX">
+                            <input type="text" id="search" placeholder="XXXXXX-XXX">
                         </div>
                     </div>
-
 
                     <div class="card-group">
                         <div class="table-parts">
@@ -554,180 +548,17 @@
                                 <div class="row title-only">
                                     <p>Результати пошуку</p>
                                 </div>
-                                <div class="row">
-                                    <div class="cell">
-                                        <div class="form-group _bg-white">
-                                            <input type="text" value="000000-000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="Назва - посилання на запчастину" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="10 0000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group _bg-white">
-                                            <input type="text" value="2" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="20" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="20 000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group checkbox">
-                                            <input type="checkbox" id="parts-1">
-                                            <label for="parts-1"></label>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <button type="button" class="btn-border btn-red btn-action">
-                                            <span class="icon-minus"></span>
-                                        </button>
+                                <div class="" id="search-results">
+                                    <div class="" style="margin-left: 25px">
+                                        Введіть пошуковий запит...
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="cell">
-                                        <div class="form-group _bg-white">
-                                            <input type="text" value="000000-000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="Назва - посилання на запчастину" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="10 0000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group _bg-white">
-                                            <input type="text" value="2" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="20" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="20 000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group checkbox">
-                                            <input type="checkbox" id="parts-1">
-                                            <label for="parts-1"></label>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <button type="button" class="btn-border btn-red btn-action">
-                                            <span class="icon-minus"></span>
-                                        </button>
-                                    </div>
-                                </div>
+
                                 <div class="row title-only">
                                     <p>Додані запчастини</p>
                                 </div>
-                                <div class="row">
-                                    <div class="cell">
-                                        <div class="form-group _bg-white">
-                                            <input type="text" value="000000-000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="Назва - посилання на запчастину" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="10 0000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group _bg-white">
-                                            <input type="text" value="2" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="20" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="20 000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group checkbox">
-                                            <input type="checkbox" id="parts-1">
-                                            <label for="parts-1"></label>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <button type="button" class="btn-border btn-red btn-action">
-                                            <span class="icon-minus"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="cell">
-                                        <div class="form-group _bg-white">
-                                            <input type="text" value="000000-000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="Назва - посилання на запчастину" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="10 0000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group _bg-white">
-                                            <input type="text" value="2" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="20" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group">
-                                            <input type="text" value="20 000" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <div class="form-group checkbox">
-                                            <input type="checkbox" id="parts-1">
-                                            <label for="parts-1"></label>
-                                        </div>
-                                    </div>
-                                    <div class="cell">
-                                        <button type="button" class="btn-border btn-red btn-action">
-                                            <span class="icon-minus"></span>
-                                        </button>
-                                    </div>
+                                <div class="" id="added-results">
+
                                 </div>
                             </div>
                             <div class="table-footer">
@@ -758,8 +589,6 @@
                             </div>
 
                         </div>
-
-
                     </div>
 
                     <div class="card-group">

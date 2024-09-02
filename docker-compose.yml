@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
     app:
         build:
@@ -34,3 +32,13 @@ services:
             - 8101:3306
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --skip-ssl
         container_name: project_db
+
+    meilisearch:
+        image: getmeili/meilisearch:v0.28
+        ports:
+            - "7700:7700"
+        volumes:
+            - meilisearch_data:/meili_data
+
+volumes:
+    meilisearch_data:

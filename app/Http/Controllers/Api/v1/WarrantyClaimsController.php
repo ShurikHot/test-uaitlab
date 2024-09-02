@@ -54,6 +54,7 @@ class WarrantyClaimsController extends Controller
 
         return response()->json([
             'success' => true,
+            'count' => count($warrantyClaims),
             'data' => $warrantyClaims,
         ]);
     }

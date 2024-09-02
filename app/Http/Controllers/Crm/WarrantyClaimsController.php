@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Crm;
 
 use App\Actions\CodeNumberAction;
+use App\Actions\QueryBuilderAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWarrantyClaimRequest;
 use App\Http\Requests\UpdateWarrantyClaimRequest;
@@ -15,7 +16,7 @@ class WarrantyClaimsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, QueryBuilderAction $queryBuilderAction)
     {
         $sortField = $request->input('sort_field', 'id');
         $sortDirection = $request->input('sort_direction', 'asc');
@@ -55,13 +56,25 @@ class WarrantyClaimsController extends Controller
 
         $warranties = $warranties->paginate(20);
 
+        $queryString = $queryBuilderAction($request->input());
+
         $from = ($warranties->currentPage() - 1) * $warranties->perPage() + 1;
         $to = min($warranties->currentPage() * $warranties->perPage(), $warranties->total());
         $totalPages = ceil($warranties->total() / $warranties->perPage());
 
         $title = 'Гарантійні заяви';
 
-        return view('front.warranty.index', compact('warranties', 'authors', 'from', 'to', 'totalPages', 'sortDirection', 'statuses', 'title'));
+        return view('front.warranty.index', compact(
+            'warranties',
+            'authors',
+            'from',
+            'to',
+            'totalPages',
+            'sortDirection',
+            'statuses',
+            'title',
+            'queryString'
+        ));
     }
 
     /**
@@ -73,7 +86,10 @@ class WarrantyClaimsController extends Controller
 
         $title = 'Створення гарантійної заяви';
 
-        return view('front.warranty.create', compact('title', 'authors'));
+        return view('front.warranty.create', compact(
+            'title',
+            'authors'
+        ));
     }
 
     /**
@@ -116,7 +132,11 @@ class WarrantyClaimsController extends Controller
 
         $title = 'Редагування гарантійної заяви';
 
-        return view('front.warranty.edit', compact('warranty', 'title', 'authors'));
+        return view('front.warranty.edit', compact(
+            'warranty',
+            'title',
+            'authors'
+        ));
     }
 
     /**

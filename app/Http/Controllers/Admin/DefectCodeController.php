@@ -45,10 +45,10 @@ class DefectCodeController extends Controller
         $data['parent_id'] = $data['parent_id'] ?: '0';
         $data['created'] = date('Y-m-d H:m:s');
 
-        DefectCode::query()->firstOrCreate([
-            'code_1C' => $data['code_1C'],
+        DefectCode::query()->firstOrCreate(
+            ['code_1C' => $data['code_1C']],
             $data
-        ]);
+        );
 
         return redirect()->route('defect-codes.index')->with('success', 'Новий код дефекту створено');
     }

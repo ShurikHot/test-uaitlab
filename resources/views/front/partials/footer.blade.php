@@ -9,6 +9,7 @@
 <script src="{{asset('assets/front/js/components.js?v=002')}}"></script>
 
 <script src="{{asset('assets/front/js/main.js?v=002')}}"></script>
-<script src="{{asset('assets/front/js/additional.js')}}"></script>
+<script src="{{asset('assets/front/js/pagination.js')}}"></script>
+<script src="{{asset('assets/front/js/search.js')}}"></script>
 </body>
 </html>

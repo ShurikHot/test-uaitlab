@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Crm;
 
 use App\Actions\BuildTreeAction;
 use App\Actions\CodeNumberAction;
+use App\Actions\QueryBuilderAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTechnicalConclusionRequest;
 use App\Http\Requests\UpdateTechnicalConclusionRequest;
@@ -17,7 +18,7 @@ class TechnicalConclusionsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, QueryBuilderAction $queryBuilderAction)
     {
         $sortField = $request->input('sort_field', 'id');
         $sortDirection = $request->input('sort_direction', 'asc');
@@ -79,13 +80,25 @@ class TechnicalConclusionsController extends Controller
 
         $technicalConclusions = $technicalConclusions->paginate(20);
 
+        $queryString = $queryBuilderAction($request->input());
+
         $from = ($technicalConclusions->currentPage() - 1) * $technicalConclusions->perPage() + 1;
         $to = min($technicalConclusions->currentPage() * $technicalConclusions->perPage(), $technicalConclusions->total());
         $totalPages = ceil($technicalConclusions->total() / $technicalConclusions->perPage());
 
         $title = 'Журнал АТЕ';
 
-        return view('front.ate.index', compact('technicalConclusions', 'authors', 'from', 'to', 'totalPages', 'sortDirection', 'statuses', 'title'));
+        return view('front.ate.index', compact(
+            'technicalConclusions',
+            'authors',
+            'from',
+            'to',
+            'totalPages',
+            'sortDirection',
+            'statuses',
+            'title',
+            'queryString'
+        ));
     }
 
     /**
@@ -103,7 +116,13 @@ class TechnicalConclusionsController extends Controller
 
         $title = 'Створення АТЕ';
 
-        return view('front.ate.create', compact('title', 'technicalConclusion', 'defectCodes', 'symptomCodes', 'appealTypes'));
+        return view('front.ate.create', compact(
+            'title',
+            'technicalConclusion',
+            'defectCodes',
+            'symptomCodes',
+            'appealTypes'
+        ));
     }
 
     /**
@@ -153,7 +172,13 @@ class TechnicalConclusionsController extends Controller
 
         $title = 'Редагування АТЕ';
 
-        return view('front.ate.edit', compact('technicalConclusion', 'title', 'appealTypes', 'defectCodes', 'symptomCodes'));
+        return view('front.ate.edit', compact(
+            'technicalConclusion',
+            'title',
+            'appealTypes',
+            'defectCodes',
+            'symptomCodes'
+        ));
     }
 
     /**

@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <label for="author">Відповідальний</label>
                                 {{--                            <input type="text" id="author" value="Прізвище Ім'я По батькові" readonly>--}}
-                                <select name="author" id="author">
+                                <select name="autor" id="author">
                                     <option selected value="">Автор документу</option>
                                     @if($authors->isNotEmpty())
                                         @foreach($authors as $author)
@@ -382,7 +382,7 @@
                             <div class="form-group default-select required" data-valid="vanilla-select">
                                 <select name="" id="">
                                     <option value="-1">Якась група товару</option>
-                                    <option value="1">Група товару - 1</option>
+                                    <option value="1" selected>Група товару - 1</option>
                                     <option value="2">Група товару - 2</option>
                                     <option value="3">Група товару - 3</option>
                                     <option value="4">Група товару - 4</option>

@@ -66,7 +66,7 @@
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="{{route('warranty.index')}}" class="nav-link bg-blue">
+                        <a href="{{route('warranty.index')}}" class="nav-link bg-blue" target="_blank">
                             <i class="nav-icon fas fa-cogs"></i>
                             <p>
                                 Перейти в CRM

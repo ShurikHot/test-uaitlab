@@ -45,7 +45,10 @@ class SymptomCodeController extends Controller
         $data['parent_id'] = $data['parent_id'] ?: '0';
         $data['created'] = date('Y-m-d H:m:s');
 
-        SymptomCode::query()->create($data);
+        SymptomCode::query()->firstOrCreate(
+            ['code_1C' => $data['code_1C']],
+            $data
+        );
 
         return redirect()->route('symptom-codes.index')->with('success', 'Новий код симптому створено');
     }

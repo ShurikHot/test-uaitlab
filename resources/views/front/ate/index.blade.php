@@ -186,12 +186,8 @@
                     Показано документів <strong>{{$from}}-{{$to}}</strong> з <strong>{{$technicalConclusions->total()}}</strong>
                 </div>
                 <div class="pagination-next">
-                    @php
-                        request()->query('sort_field') ? ($sortField = '&sort_field=' . request()->query('sort_field')) : $sortField = '';
-                        request()->query('sort_direction') ? ($sortDirection = '&sort_direction=' . request()->query('sort_direction')) : $sortDirection = '';
-                    @endphp
                     @if($technicalConclusions->hasMorePages())
-                        <a href="{{ $technicalConclusions->nextPageUrl() . $sortField . $sortDirection }}" class="btn-primary btn-blue">
+                        <a href="{{ $technicalConclusions->nextPageUrl() . $queryString }}" class="btn-primary btn-blue">
                             Наступна сторінка
                             <span class="icon-arrow-dropdown"></span>
                         </a>
@@ -207,7 +203,7 @@
                     <div class="form-group">
                         <select name="" id="pagin">
                             @for($i = 1; $i <= $totalPages; $i++)
-                                <option value="{{ $technicalConclusions->url($i) . $sortField . $sortDirection }}" @if($i == $technicalConclusions->currentPage()) selected @endif>
+                                <option value="{{ $technicalConclusions->url($i) . $queryString }}" @if($i == $technicalConclusions->currentPage()) selected @endif>
                                     {{ $i }}
                                 </option>
                             @endfor
