@@ -21,13 +21,13 @@ class WarrantyClaimsController extends Controller
 
         if ($request->has('datefrom') && $request->filled('datefrom')) {
             $value = $request->input('datefrom');
-            $query->whereDate('date', '>', $value);
+            $query->whereDate('date', '>=', $value);
         }
 
         if ($request->has('dateto')) {
             $value = $request->input('dateto');
             $value = $value ?: date('Y-m-d');
-            $query->whereDate('date', '<', $value);
+            $query->whereDate('date', '<=', $value);
         }
 
         if ($request->has('status') && $request->filled('status')) {

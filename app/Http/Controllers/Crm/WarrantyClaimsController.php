@@ -34,7 +34,7 @@ class WarrantyClaimsController extends Controller
         }
 
         if (!$request->filled('date-start') && $request->filled('date-end')) {
-            $warranties->where('date_of_claim', '<', $request->input('date-end'));
+            $warranties->where('date_of_claim', '<=', $request->input('date-end'));
         }
 
         if ($request->filled('date-start') && $request->filled('date-end')) {
