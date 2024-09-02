@@ -184,12 +184,8 @@
                     Показано документів <strong>{{$from}}-{{$to}}</strong> з <strong>{{$warranties->total()}}</strong>
                 </div>
                 <div class="pagination-next">
-                    @php
-                        request()->query('sort_field') ? ($sortField = '&sort_field=' . request()->query('sort_field')) : $sortField = '';
-                        request()->query('sort_direction') ? ($sortDirection = '&sort_direction=' . request()->query('sort_direction')) : $sortDirection = '';
-                    @endphp
                     @if($warranties->hasMorePages())
-                        <a href="{{ $warranties->nextPageUrl() . $sortField . $sortDirection }}" class="btn-primary btn-blue">
+                        <a href="{{ $warranties->nextPageUrl() . $queryString }}" class="btn-primary btn-blue">
                             Наступна сторінка
                             <span class="icon-arrow-dropdown"></span>
                         </a>
@@ -205,7 +201,7 @@
                     <div class="form-group">
                         <select name="" id="pagin">
                             @for($i = 1; $i <= $totalPages; $i++)
-                                <option value="{{ $warranties->url($i) . $sortField . $sortDirection }}" @if($i == $warranties->currentPage()) selected @endif>
+                                <option value="{{ $warranties->url($i) . $queryString }}" @if($i == $warranties->currentPage()) selected @endif>
                                     {{ $i }}
                                 </option>
                             @endfor

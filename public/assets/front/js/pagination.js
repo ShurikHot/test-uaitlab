@@ -1,3 +1,3 @@
 document.getElementById('pagin').addEventListener('change', function () {
-    window.location.href = this.value;
+    window.location.href = this.value
 });

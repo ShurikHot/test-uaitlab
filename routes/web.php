@@ -35,4 +35,5 @@ Route::get('logout', [AuthController::class, 'logout'])->middleware(['auth'])->n
 Route::group(['middleware' => 'auth', 'prefix' => 'crm'], function () {
     Route::resource('/warranty', WarrantyClaimsController::class);
     Route::resource('/ate', TechnicalConclusionsController::class);
+    Route::get('/search', \App\Http\Controllers\Crm\SearchController::class)->name('search');
 });
