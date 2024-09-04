@@ -94,9 +94,10 @@ class WarrantyClaimsController extends Controller
                     'service_partner' => $data['service_partner'],
                     'service_contract' => $data['service_contract'],
                     'product_article' => $data['product_article'],
+                    'photo_path' => $data['photo_path'],
                     'status' => $data['status'],
                     'spare_parts_sum' => 0,
-                    'service_works_sum' => 0
+                    'service_works_sum' => 0,
                 ];
                 $warrantyClaim = WarrantyClaim::query()->firstOrCreate(
                     ['code_1c' => $warrantyClaimData['code_1c'], 'number_1c' => $warrantyClaimData['number_1c']],

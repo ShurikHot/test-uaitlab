@@ -17,7 +17,7 @@
                 </div>
             </div>
 
-            <form action="{{route('warranty.store')}}" method="post" class="card-lists js-form-validation" id="form-id">
+            <form action="{{route('warranty.store')}}" method="post" class="card-lists js-form-validation" id="form-id" enctype="multipart/form-data">
                 @csrf
 
                 <div class="card-content card-form">
@@ -355,7 +355,7 @@
                             <textarea id="comment" name="comment" placeholder="Коментар до заяви" rows="3"></textarea>
                         </div>
                         <div class="form-group file">
-                            <input type="file" id="file" multiple>
+                            <input type="file" name="photo[]" id="file" multiple>
                             <label for="file">
                                 <span class="icon-upload"></span>
 
@@ -377,7 +377,7 @@
                     <div class="card-title__wrapper">
                         <p class="card-title">Сервісні роботи</p>
 
-                        <div class="form-group default-select required" data-valid="vanilla-select">
+                        <div class="form-group default-select {{--required--}}" data-valid="vanilla-select">
                             <select name="serviceWorkSelect" id="serviceWorkSelect">
                                 <option value="-1">Оберіть сервісну роботу</option>
                                 @if($serviceWorks->isNotEmpty())

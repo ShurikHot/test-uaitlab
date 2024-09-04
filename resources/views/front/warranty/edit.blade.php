@@ -10,7 +10,7 @@
 
     <div class="main" id="main">
         <div class="page-warranty-create">
-            <form action="{{route('warranty.update', $warranty->id)}}" method="post" class="card-lists js-form-validation" id="form-id">
+            <form action="{{route('warranty.update', $warranty->id)}}" method="post" class="card-lists js-form-validation" id="form-id" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
 
@@ -351,13 +351,20 @@
                     </div>
                     <div class="card-content card-form">
                         <p class="card-title">Підтверджуючі фото та інше</p>
+                            <div class="" style="margin-bottom: 20px; display: flex;">
+                                @if($warranty->photo_path)
+                                    @foreach($warranty->photo_path as $photo)
+                                        <img src="{{Storage::url($photo)}}" alt="" style="width: auto; height: 40px; border: 1px solid; margin-right: 10px ">
+                                    @endforeach
+                                @endif
+                            </div>
                         <div class="inputs-group one-row">
                             <div class="form-group">
                                 <label for="comment">Коментар</label>
                                 <textarea id="comment" name="comment" placeholder="Коментар до заяви" rows="3">{{ old('comment', $warranty->comment ?? '') }}</textarea>
                             </div>
                             <div class="form-group file">
-                                <input type="file" id="file" multiple>
+                                <input type="file" name="photo[]" id="file" multiple>
                                 <label for="file">
                                     <span class="icon-upload"></span>
 

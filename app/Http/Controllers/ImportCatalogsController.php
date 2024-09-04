@@ -18,9 +18,9 @@ class ImportCatalogsController extends Controller
         $path = storage_path("app/public/sql/2_tables_additional.sql");
         if (file_exists($path)) {
             ImportSqlToDBJob::dispatchSync();
-            return redirect()->back()->with('success', 'SQL дамп успішно завантажений');
+            return redirect()->back()->with('success', 'Довідники успішно завантажені');
         } else {
-            return redirect()->back()->with('error', 'Файл не знайдено');
+            return redirect()->back()->with('error', 'Файли не знайдено');
         }
     }
 

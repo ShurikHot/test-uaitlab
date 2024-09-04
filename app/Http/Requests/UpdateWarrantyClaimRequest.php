@@ -46,6 +46,7 @@ class UpdateWarrantyClaimRequest extends FormRequest
             'status' => 'string|nullable',
             'spare_parts_sum' => 'decimal:2|nullable',
             'service_works_sum' => 'decimal:2|nullable',
+            'photo.*' => 'mimes:jpg,jpeg,png|max:5120',
             'items' => 'array|nullable',
             'items.*' => 'array|nullable',
             'items.*.articul' => 'string|nullable',

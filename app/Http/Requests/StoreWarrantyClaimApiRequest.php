@@ -41,9 +41,10 @@ class StoreWarrantyClaimApiRequest extends FormRequest
             'service_partner' => 'string|required',
             'service_contract' => 'string|nullable',
             'product_article' => 'string|nullable',
+            'photo_path' => 'string|nullable',
             'status' => 'string|nullable',
-            'spare_parts_sum' => 'decimal:2|nullable',
-            'service_works_sum' => 'decimal:2|nullable',
+            'spare_parts_sum' => 'numeric|nullable',
+            'service_works_sum' => 'numeric|nullable',
 
             'technical_conclusions.date' => 'date|required',
             'technical_conclusions.defect_codes_code_1c' => 'string|required|exists:defect_codes,code_1C',

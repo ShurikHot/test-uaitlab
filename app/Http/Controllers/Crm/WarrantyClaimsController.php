@@ -13,6 +13,7 @@ use App\Models\WarrantyClaimServiceWork;
 use App\Models\WarrantyClaimSparepart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WarrantyClaimsController extends Controller
 {
@@ -102,6 +103,17 @@ class WarrantyClaimsController extends Controller
     public function store(StoreWarrantyClaimRequest $request, CodeNumberAction $codeNumberAction): RedirectResponse
     {
         $data = $request->validated();
+        if (!empty($data['photo'])) {
+            $filePaths = [];
+            foreach ($data['photo'] as $photo) {
+                if ($photo) {
+                    $path = Storage::put('public/photos', $photo);
+                    $filePaths[] = $path;
+                }
+            }
+            $data['photo_path'] = implode(',', $filePaths);
+            unset($data['photo']);
+        }
 
         $data['code_1c'] = $codeNumberAction->getCode();
         $data['number_1c'] = $codeNumberAction->getNumber();
@@ -176,6 +188,10 @@ class WarrantyClaimsController extends Controller
         $authors = WarrantyClaim::query()->pluck('autor')->unique();
         $serviceWorks = ServiceWorks::all();
 
+        if ($warranty['photo_path']) {
+            $warranty['photo_path'] = explode(',', $warranty['photo_path']);
+        }
+
         $title = 'Редагування гарантійної заяви';
 
         return view('front.warranty.edit', compact(
@@ -192,6 +208,16 @@ class WarrantyClaimsController extends Controller
     public function update(UpdateWarrantyClaimRequest $request, CodeNumberAction $codeNumberAction, string $id): RedirectResponse
     {
         $data = $request->validated();
+        if (!empty($data['photo'])) {
+            $filePaths = [];
+            foreach ($data['photo'] as $photo) {
+                if ($photo) {
+                    $path = Storage::put('public/photos', $photo);
+                    $filePaths[] = $path;
+                }
+            }
+            unset($data['photo']);
+        }
 
         if (array_key_exists('items', $data)) {
             $spareParts = $data['items'];
@@ -206,6 +232,14 @@ class WarrantyClaimsController extends Controller
         try {
             WarrantyClaim::query()->where('id', $id)->update($data);
             $warrantyClaim = WarrantyClaim::query()->where('id', $id)->first();
+
+            if (isset($filePaths)) {
+                $photoPaths = $warrantyClaim->photo_path;
+                $photoPaths .= ',' . implode(',', $filePaths);
+            } else {
+                $photoPaths = $warrantyClaim->photo_path;
+            }
+
             WarrantyClaimSparepart::query()->where('warranty_claims_number_1c', $data['number_1c'])->delete();
             WarrantyClaimServiceWork::query()->where('warranty_claims_number_1c', $data['number_1c'])->delete();
 
@@ -238,6 +272,7 @@ class WarrantyClaimsController extends Controller
             $warrantyClaim->update([
                 'spare_parts_sum' => $sumParts,
                 'service_works_sum' => $sumWorks,
+                'photo_path' => $photoPaths,
             ]);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Помилка оновлення гарантійної заяви');
