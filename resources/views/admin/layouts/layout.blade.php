@@ -31,7 +31,7 @@
                 <div class="d-flex justify-content-between">
                     <a href="{{url('/')}}" class="nav-link">Home</a>
                     <a href="{{url('/import-excel')}}" class="nav-link ml-5 bg-cyan rounded">Імпортувати данні з таблиць</a>
-                    <a href="{{url('/import-sql')}}" class="nav-link ml-5 bg-fuchsia rounded">Імпортувати довідники з дампу</a>
+                    <a href="{{url('/import-sql')}}" class="nav-link ml-5 bg-fuchsia rounded">Імпортувати довідники</a>
                 </div>
             </li>
         </ul>
@@ -94,6 +94,18 @@
                                 <a href="{{route('symptom-codes.index')}}" class="nav-link">
                                     <i class="far fa-bookmark nav-icon"></i>
                                     <p>Коди симптомів</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('works.index')}}" class="nav-link">
+                                    <i class="far fa-bookmark nav-icon"></i>
+                                    <p>Види сервісних робіт</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('parts.index')}}" class="nav-link">
+                                    <i class="far fa-bookmark nav-icon"></i>
+                                    <p>Запчастини</p>
                                 </a>
                             </li>
                         </ul>

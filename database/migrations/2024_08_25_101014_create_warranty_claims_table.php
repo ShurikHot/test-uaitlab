@@ -36,8 +36,8 @@ return new class extends Migration
             $table->string('service_contract')->nullable();
             $table->string('product_article')->nullable();
             $table->enum('status', ['Done', 'Ложь'])->default('Ложь')->nullable();
-            $table->decimal('spare_parts_sum', 10, 2)->nullable();
-            $table->decimal('service_works_sum', 10, 2)->nullable();
+            $table->decimal('spare_parts_sum', 10, 2)->default(0)->nullable();
+            $table->decimal('service_works_sum', 10, 2)->default(0)->nullable();
 
             $table->timestamps();
         });

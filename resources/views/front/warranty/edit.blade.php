@@ -379,14 +379,14 @@
                         <div class="card-title__wrapper">
                             <p class="card-title">Сервісні роботи</p>
 
-                            <div class="form-group default-select required" data-valid="vanilla-select">
-                                <select name="" id="">
-                                    <option value="-1">Якась група товару</option>
-                                    <option value="1" selected>Група товару - 1</option>
-                                    <option value="2">Група товару - 2</option>
-                                    <option value="3">Група товару - 3</option>
-                                    <option value="4">Група товару - 4</option>
-                                    <option value="5">Група товару - 5</option>
+                            <div class="form-group default-select {{--required--}}" data-valid="vanilla-select">
+                                <select name="serviceWorkSelect" id="serviceWorkSelect">
+                                    <option value="-1">Оберіть сервісну роботу</option>
+                                    @if($serviceWorks->isNotEmpty())
+                                        @foreach($serviceWorks as $serviceWork)
+                                            <option value="{{$serviceWork->code_1c}}">{{$serviceWork->product}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 <div class="help-block" data-empty="Required field"></div>
                             </div>
@@ -395,7 +395,7 @@
                         <div class="display-grid">
 
                             <div class="inputs-group one-column">
-                                @if($warranty->serviceWorks->isNotEmpty())
+
                                     <div class="table-parts">
                                         <div class="table-header">
                                             <div class="row">
@@ -412,28 +412,30 @@
                                             </div>
                                         </div>
 
-                                        <div class="table-body">
-                                            @foreach($warranty->serviceWorks as $work)
+                                        <div class="table-body" id="serviceWorkTableBody">
+                                            @if($warranty->serviceWorks->isNotEmpty())
+                                                @foreach($warranty->serviceWorks as $work)
                                                 <div class="row">
                                                     <div class="cell">
                                                         <div class="form-group checkbox">
-                                                            <input type="checkbox" id="parts-55105" checked>
-                                                            <label for="parts-55105"></label>
+                                                            <input type="hidden" name="works[{{$work->code_1c}}][code_1c]" value="{{$work->code_1c}}">
+                                                            <input type="checkbox" name="works[{{$work->code_1c}}][checked]" id="parts-{{$work->code_1c}}" checked>
+                                                            <label for="parts-{{$work->code_1c}}"></label>
                                                         </div>
                                                     </div>
                                                     <div class="cell">
                                                         <div class="form-group">
-                                                            <input type="text" value="{{$work->product}}" readonly="">
+                                                            <input type="text" name="works[{{$work->code_1c}}][product]" value="{{$work->product}}" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="cell">
                                                         <div class="form-group">
-                                                            <input type="text" value="{{$work->price}}" readonly="">
+                                                            <input type="text" name="works[{{$work->code_1c}}][price]" value="{{$work->price}}" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="cell">
                                                         <div class="form-group _bg-white">
-                                                            <input type="text" value="{{$work->qty}}" >
+                                                            <input type="text" name="works[{{$work->code_1c}}][qty]" value="{{$work->qty}}" >
                                                         </div>
                                                     </div>
                                                     <div class="cell">
@@ -444,20 +446,22 @@
 
                                                 </div>
                                             @endforeach
-
+                                            @endif
                                         </div>
-                                        <div class="table-footer">
-                                            <div class="row">
-                                                <div class="cell">Загальна вартість робіт</div>
-                                                <div class="cell"></div>
-                                                <div class="cell"></div>
-                                                <div class="cell"></div>
-                                                <div class="cell">{{$warranty->serviceWorks->pluck('sum')->sum()}}</div>
+                                        @if($warranty->serviceWorks->isNotEmpty())
+                                            <div class="table-footer">
+                                                <div class="row">
+                                                    <div class="cell">Загальна вартість робіт</div>
+                                                    <div class="cell"></div>
+                                                    <div class="cell"></div>
+                                                    <div class="cell"></div>
+                                                    <div class="cell">{{$warranty->serviceWorks->pluck('sum')->sum()}}</div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
 
                                     </div>
-                                @endif
+
 
 
                                 <div class="display-grid col-2">
@@ -479,11 +483,11 @@
                             <p class="card-title">Використані запчастини</p>
                             <div class="form-group have-icon">
                                 <span class="icon icon-search-active"></span>
-                                <input type="text" placeholder="XXXXXX-XXX">
+                                <input type="text" id="search_spareparts" placeholder="XXXXXX-XXX">
                             </div>
                         </div>
 
-                        @if($warranty->spareParts->isNotEmpty())
+
                             <div class="card-group">
                                 <div class="table-parts">
                                     <div class="table-header">
@@ -503,140 +507,64 @@
                                         <div class="row title-only">
                                             <p>Результати пошуку</p>
                                         </div>
-                                        <div class="row">
-                                            <div class="cell">
-                                                <div class="form-group _bg-white">
-                                                    <input type="text" value="000000-000" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="Назва - посилання на запчастину" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="10 0000" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group _bg-white">
-                                                    <input type="text" value="2" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="20" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="20 000" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group checkbox">
-                                                    <input type="checkbox" id="parts-1">
-                                                    <label for="parts-1"></label>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <button type="button" class="btn-border btn-red btn-action">
-                                                    <span class="icon-minus"></span>
-                                                </button>
+                                        <div class="" id="search-results">
+                                            <div class="" style="margin-left: 25px">
+                                                Введіть пошуковий запит...
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="cell">
-                                                <div class="form-group _bg-white">
-                                                    <input type="text" value="000000-000" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="Назва - посилання на запчастину" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="10 0000" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group _bg-white">
-                                                    <input type="text" value="2" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="20" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="20 000" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group checkbox">
-                                                    <input type="checkbox" id="parts-1">
-                                                    <label for="parts-1"></label>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <button type="button" class="btn-border btn-red btn-action">
-                                                    <span class="icon-minus"></span>
-                                                </button>
-                                            </div>
-                                        </div>
+
                                         <div class="row title-only">
                                             <p>Додані запчастини</p>
                                         </div>
-                                        @foreach($warranty->spareParts as $part)
-                                            <div class="row">
-                                            <div class="cell">
-                                                <div class="form-group _bg-white">
-                                                    <input type="text" value="{{$part->articul}}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="{{$part->product}}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="{{$part->price}}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group _bg-white">
-                                                    <input type="text" value="{{$part->qty}}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="{{$part->discount}}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group">
-                                                    <input type="text" value="{{$part->sum}}" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <div class="form-group checkbox">
-                                                    <input type="checkbox" id="parts-1">
-                                                    <label for="parts-1"></label>
-                                                </div>
-                                            </div>
-                                            <div class="cell">
-                                                <button type="button" class="btn-border btn-red btn-action">
-                                                    <span class="icon-minus"></span>
-                                                </button>
-                                            </div>
+
+                                        <div class="" id="added-results">
+                                            @if($warranty->spareParts->isNotEmpty())
+                                                @foreach($warranty->spareParts as $part)
+                                                    <div class="row added-result-row" data-index="{{$part->articul}}"]>
+                                                        <div class="cell">
+                                                            <div class="form-group _bg-white">
+                                                                <input type="text" name="items[{{$part->articul}}][articul]" value="{{$part->articul}}" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cell">
+                                                            <div class="form-group">
+                                                                <input type="text" name="items[{{$part->articul}}][product]" value="{{$part->product}}" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cell">
+                                                            <div class="form-group">
+                                                                <input type="text" name="items[{{$part->articul}}][price]" id="added-price-{{$part->articul}}" value="{{$part->price}}" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cell">
+                                                            <div class="form-group _bg-white">
+                                                                <input type="text" name="items[{{$part->articul}}][qty]" id="added-qty-{{$part->articul}}" value="{{$part->qty}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="cell">
+                                                            <div class="form-group">
+                                                                <input type="text" name="items[{{$part->articul}}][discount]" id="added-discount-{{$part->articul}}" value="{{$part->discount}}" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cell">
+                                                            <div class="form-group">
+                                                                <input type="text" value="{{$part->sum}}" id="added-total-{{$part->articul}}" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cell">
+                                                            <div class="form-group">
+                                                                <input type="text" value="" readOnly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="cell">
+                                                            <button type="button" class="btn-border btn-red btn-action">
+                                                                <span class="icon-minus" id="minus-{{$part->articul}}"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
                                         </div>
-                                        @endforeach
                                     </div>
                                     <div class="table-footer">
                                         <div class="row">
@@ -660,14 +588,13 @@
                                             <div class="cell"></div>
                                             <div class="cell"></div>
                                             <div class="cell"></div>
-                                            <div class="cell">{{$warranty->spareParts->pluck('sum')->sum()}}</div>
+                                            <div class="cell">{{$warranty->spare_parts_sum + $warranty->service_works_sum}}</div>
                                             <div class="cell"></div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-                        @endif
 
                         <div class="card-group">
                             <p class="sub-title">Для пошуку потрібних запчастин  перейдіть за посиланням</p>

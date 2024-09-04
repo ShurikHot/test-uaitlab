@@ -46,6 +46,20 @@ class UpdateWarrantyClaimRequest extends FormRequest
             'status' => 'string|nullable',
             'spare_parts_sum' => 'decimal:2|nullable',
             'service_works_sum' => 'decimal:2|nullable',
+            'items' => 'array|nullable',
+            'items.*' => 'array|nullable',
+            'items.*.articul' => 'string|nullable',
+            'items.*.product' => 'string|nullable',
+            'items.*.price' => 'string|nullable',
+            'items.*.discount' => 'string|nullable',
+            'items.*.qty' => 'string|nullable',
+            'works' => 'array|nullable',
+            'works.*' => 'array|nullable',
+            'works.*.code_1c' => 'string|nullable',
+            'works.*.checked' => 'string|nullable',
+            'works.*.product' => 'string|nullable',
+            'works.*.price' => 'numeric|nullable',
+            'works.*.qty' => 'numeric|nullable',
         ];
     }
 }

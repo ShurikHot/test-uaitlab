@@ -378,28 +378,26 @@
                         <p class="card-title">Сервісні роботи</p>
 
                         <div class="form-group default-select required" data-valid="vanilla-select">
-                            <select name="" id="">
-                                <option value="-1">Якась група товару</option>
-                                <option value="1" selected>Група товару - 1</option>
-                                <option value="2">Група товару - 2</option>
-                                <option value="3">Група товару - 3</option>
-                                <option value="4">Група товару - 4</option>
-                                <option value="5">Група товару - 5</option>
+                            <select name="serviceWorkSelect" id="serviceWorkSelect">
+                                <option value="-1">Оберіть сервісну роботу</option>
+                                @if($serviceWorks->isNotEmpty())
+                                    @foreach($serviceWorks as $serviceWork)
+                                        <option value="{{$serviceWork->code_1c}}">{{$serviceWork->product}}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <div class="help-block" data-empty="Required field"></div>
                         </div>
                     </div>
 
                     <div class="display-grid">
-
-
                         <div class="inputs-group one-column">
                             <div class="table-parts">
                                 <div class="table-header">
                                     <div class="row">
                                         <div class="cell">
                                             <div class="form-group checkbox">
-                                                <input type="checkbox" id="parts-nn" >
+                                                <input type="checkbox" id="parts-nn">
                                                 <label for="parts-nn"></label>
                                             </div>
                                         </div>
@@ -409,103 +407,17 @@
                                         <div class="cell">Вартість, грн</div>
                                     </div>
                                 </div>
+                                <div class="table-body" id="serviceWorkTableBody">
 
-                                <div class="table-body">
-                                    <div class="row">
-                                        <div class="cell">
-                                            <div class="form-group checkbox">
-                                                <input type="checkbox" id="parts-55105">
-                                                <label for="parts-55105"></label>
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="Можливий сервіс, характерних обраній групі товару" readonly="">
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="100 000. 00" readonly="">
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group _bg-white">
-                                                <input type="text" value="2" >
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="200 000.00" readonly="">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="cell">
-                                            <div class="form-group checkbox">
-                                                <input type="checkbox" id="parts-55105">
-                                                <label for="parts-55105"></label>
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="Можливий сервіс, характерних обраній групі товару" readonly="">
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="100 000. 00" readonly="">
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group _bg-white">
-                                                <input type="text" value="2" >
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="200 000.00" readonly="">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="cell">
-                                            <div class="form-group checkbox">
-                                                <input type="checkbox" id="parts-55105">
-                                                <label for="parts-55105"></label>
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="Можливий сервіс, характерних обраній групі товару" readonly="">
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="100 000. 00" readonly="">
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group _bg-white">
-                                                <input type="text" value="2" >
-                                            </div>
-                                        </div>
-                                        <div class="cell">
-                                            <div class="form-group">
-                                                <input type="text" value="200 000.00" readonly="">
-                                            </div>
-                                        </div>
-
-                                    </div>
                                 </div>
+
                                 <div class="table-footer">
                                     <div class="row">
                                         <div class="cell">Загальна вартість робіт</div>
                                         <div class="cell"></div>
                                         <div class="cell"></div>
                                         <div class="cell"></div>
-                                        <div class="cell">80 000</div>
+                                        <div class="cell"></div>
                                     </div>
                                 </div>
 
@@ -525,7 +437,7 @@
                         <p class="card-title">Використані запчастини</p>
                         <div class="form-group have-icon">
                             <span class="icon icon-search-active"></span>
-                            <input type="text" id="search" placeholder="XXXXXX-XXX">
+                            <input type="text" id="search_spareparts" placeholder="XXXXXX-XXX">
                         </div>
                     </div>
 
@@ -568,7 +480,7 @@
                                     <div class="cell"></div>
                                     <div class="cell"></div>
                                     <div class="cell"></div>
-                                    <div class="cell">80 000</div>
+                                    <div class="cell"></div>
                                     <div class="cell"></div>
                                 </div>
                             </div>
@@ -583,7 +495,7 @@
                                     <div class="cell"></div>
                                     <div class="cell"></div>
                                     <div class="cell"></div>
-                                    <div class="cell">80 000</div>
+                                    <div class="cell"></div>
                                     <div class="cell"></div>
                                 </div>
                             </div>

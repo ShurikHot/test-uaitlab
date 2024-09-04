@@ -7,7 +7,10 @@ use App\Actions\QueryBuilderAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWarrantyClaimRequest;
 use App\Http\Requests\UpdateWarrantyClaimRequest;
+use App\Models\ServiceWorks;
 use App\Models\WarrantyClaim;
+use App\Models\WarrantyClaimServiceWork;
+use App\Models\WarrantyClaimSparepart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -83,12 +86,13 @@ class WarrantyClaimsController extends Controller
     public function create()
     {
         $authors = WarrantyClaim::query()->pluck('autor')->unique();
-
+        $serviceWorks = ServiceWorks::all();
         $title = 'Створення гарантійної заяви';
 
         return view('front.warranty.create', compact(
             'title',
-            'authors'
+            'authors',
+            'serviceWorks'
         ));
     }
 
@@ -98,15 +102,56 @@ class WarrantyClaimsController extends Controller
     public function store(StoreWarrantyClaimRequest $request, CodeNumberAction $codeNumberAction): RedirectResponse
     {
         $data = $request->validated();
+
         $data['code_1c'] = $codeNumberAction->getCode();
         $data['number_1c'] = $codeNumberAction->getNumber();
-        $data['status'] = 'Ложь';
+
+        if (array_key_exists('items', $data)) {
+            $spareParts = $data['items'];
+            unset($data['items']);
+        }
+
+        if (array_key_exists('works', $data)) {
+            $serviceWorks = $data['works'];
+            unset($data['works']);
+        }
 
         try {
-            WarrantyClaim::query()->firstOrCreate(
+            $warrantyClaim = WarrantyClaim::query()->firstOrCreate(
                 ['code_1c' => $data['code_1c'], 'number_1c' => $data['number_1c']],
                 $data
             );
+
+            $sumWorks = 0;
+            if (!empty($serviceWorks)) {
+                foreach ($serviceWorks as $serviceWork) {
+                    if ($serviceWork['checked'] === 'on' && $serviceWork['price'] != null && $serviceWork['qty'] != null) {
+                        $serviceWork['warranty_claims_number_1c'] = $warrantyClaim->number_1c;
+                        $serviceWork['sum'] = $serviceWork['qty'] * $serviceWork['price'];
+                        $sumWorks += $serviceWork['sum'];
+                        unset($serviceWork['checked']);
+
+                        WarrantyClaimServiceWork::query()->create($serviceWork);
+                    }
+                }
+            }
+
+            $sumParts = 0;
+            if (!empty($spareParts)) {
+                foreach ($spareParts as $sparePart) {
+                    $sparePart['code_1c'] = $codeNumberAction->getCode();
+                    $sparePart['warranty_claims_number_1c'] = $warrantyClaim->number_1c;
+                    $sparePart['sum'] = $sparePart['qty'] * $sparePart['price'] * (1 - $sparePart['discount'] / 100);
+                    $sumParts += $sparePart['sum'];
+
+                    WarrantyClaimSparepart::query()->create($sparePart);
+                }
+            }
+
+            $warrantyClaim->update([
+                'spare_parts_sum' => $sumParts,
+                'service_works_sum' => $sumWorks,
+            ]);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Помилка створення гарантійної заяви');
         }
@@ -129,25 +174,71 @@ class WarrantyClaimsController extends Controller
     {
         $warranty = WarrantyClaim::query()->where('id', $id)->first();
         $authors = WarrantyClaim::query()->pluck('autor')->unique();
+        $serviceWorks = ServiceWorks::all();
 
         $title = 'Редагування гарантійної заяви';
 
         return view('front.warranty.edit', compact(
             'warranty',
             'title',
-            'authors'
+            'authors',
+            'serviceWorks'
         ));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateWarrantyClaimRequest $request, string $id): RedirectResponse
+    public function update(UpdateWarrantyClaimRequest $request, CodeNumberAction $codeNumberAction, string $id): RedirectResponse
     {
         $data = $request->validated();
 
+        if (array_key_exists('items', $data)) {
+            $spareParts = $data['items'];
+            unset($data['items']);
+        }
+
+        if (array_key_exists('works', $data)) {
+            $serviceWorks = $data['works'];
+            unset($data['works']);
+        }
+
         try {
             WarrantyClaim::query()->where('id', $id)->update($data);
+            $warrantyClaim = WarrantyClaim::query()->where('id', $id)->first();
+            WarrantyClaimSparepart::query()->where('warranty_claims_number_1c', $data['number_1c'])->delete();
+            WarrantyClaimServiceWork::query()->where('warranty_claims_number_1c', $data['number_1c'])->delete();
+
+            $sumWorks = 0;
+            if (!empty($serviceWorks)) {
+                foreach ($serviceWorks as $serviceWork) {
+                    if ($serviceWork['checked'] === 'on' && $serviceWork['price'] != null && $serviceWork['qty'] != null) {
+                        $serviceWork['warranty_claims_number_1c'] = $warrantyClaim->number_1c;
+                        $serviceWork['sum'] = $serviceWork['qty'] * $serviceWork['price'];
+                        $sumWorks += $serviceWork['sum'];
+                        unset($serviceWork['checked']);
+
+                        WarrantyClaimServiceWork::query()->create($serviceWork);
+                    }
+                }
+            }
+
+            $sumParts = 0;
+            if (!empty($spareParts)) {
+                foreach ($spareParts as $sparePart) {
+                    $sparePart['code_1c'] = $codeNumberAction->getCode();
+                    $sparePart['warranty_claims_number_1c'] = $warrantyClaim->number_1c;
+                    $sparePart['sum'] = $sparePart['qty'] * $sparePart['price'] * (1 - $sparePart['discount'] / 100);
+                    $sumParts += $sparePart['sum'];
+
+                    WarrantyClaimSparepart::query()->create($sparePart);
+                }
+            }
+
+            $warrantyClaim->update([
+                'spare_parts_sum' => $sumParts,
+                'service_works_sum' => $sumWorks,
+            ]);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Помилка оновлення гарантійної заяви');
         }
