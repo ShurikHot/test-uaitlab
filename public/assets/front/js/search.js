@@ -187,7 +187,8 @@ function removeRowFromAdded(articul) {
 function addRowToResults(item) {
     let searchResultsContainer = document.getElementById('search-results')
     let row = document.createElement('div')
-    row.className = 'row added-result-row'
+    row.className = 'row search-result-row'
+    row.setAttribute('data-index', item.articul);
     row.innerHTML = `
         <div class="cell">
             <div class="form-group _bg-white">
@@ -231,7 +232,14 @@ function addRowToResults(item) {
         </div>
     `;
 
+    let addButton = row.querySelector(`#plus-${item.articul}`)
+    addButton.addEventListener('click', function() {
+        addRowToAddedResults(item)
+        removeRowFromResults(item.articul)
+    })
+
     searchResultsContainer.appendChild(row);
+
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -248,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 qty: this.closest('.row').querySelector('input[name*="[qty]"]').value,
                 discount: this.closest('.row').querySelector('input[name*="[discount]"]').value
             };
-            removeRowFromAdded(articul);
 
             const qtyInput = this.closest('.row').querySelector(`#added-qty-${articul}`);
             const priceInput = this.closest('.row').querySelector(`#added-price-${articul}`);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Crm;
 
 use App\Actions\CodeNumberAction;
 use App\Actions\QueryBuilderAction;
+use App\Enums\StatusEnums;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreWarrantyClaimRequest;
 use App\Http\Requests\UpdateWarrantyClaimRequest;
@@ -26,9 +27,8 @@ class WarrantyClaimsController extends Controller
         $sortDirection = $request->input('sort_direction', 'asc');
 
         $warranties = WarrantyClaim::query()
-            ->tap(function ($query) use (&$authors, &$statuses) {
+            ->tap(function ($query) use (&$authors) {
                 $authors = $query->pluck('autor')->unique();
-                $statuses = $query->pluck('status')->unique();
             })
             ->with(['serviceWorks', 'spareParts', 'technicalConclusions'])
             ->orderBy($sortField, $sortDirection);
@@ -66,6 +66,7 @@ class WarrantyClaimsController extends Controller
         $to = min($warranties->currentPage() * $warranties->perPage(), $warranties->total());
         $totalPages = ceil($warranties->total() / $warranties->perPage());
 
+        $statuses = [StatusEnums::DONE->value, StatusEnums::FALSE->value];
         $title = 'Гарантійні заяви';
 
         return view('front.warranty.index', compact(

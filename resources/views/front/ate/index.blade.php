@@ -76,7 +76,7 @@
                             </div>
                             <div class="filter-group__content js-accordion-content">
                                 <div class="filter-group__content__wrapper">
-                                    @if($statuses->isNotEmpty())
+                                    @if($statuses)
                                         @foreach($statuses as $key => $status)
                                             <div class="form-group checkbox">
                                                 <input type="checkbox" id="status-{{$key}}" name="status[]" value="{{$status}}">

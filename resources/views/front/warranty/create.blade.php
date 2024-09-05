@@ -397,7 +397,7 @@
                                     <div class="row">
                                         <div class="cell">
                                             <div class="form-group checkbox">
-                                                <input type="checkbox" id="parts-nn">
+                                                <input type="checkbox" id="parts-nn" disabled>
                                                 <label for="parts-nn"></label>
                                             </div>
                                         </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Crm;
 use App\Actions\BuildTreeAction;
 use App\Actions\CodeNumberAction;
 use App\Actions\QueryBuilderAction;
+use App\Enums\AppealTypesEnums;
+use App\Enums\StatusEnums;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTechnicalConclusionRequest;
 use App\Http\Requests\UpdateTechnicalConclusionRequest;
@@ -24,7 +26,7 @@ class TechnicalConclusionsController extends Controller
         $sortDirection = $request->input('sort_direction', 'asc');
 
         $authors = WarrantyClaim::query()->pluck('autor')->unique();
-        $statuses = WarrantyClaim::query()->pluck('status')->unique();
+        $statuses = [StatusEnums::DONE->value, StatusEnums::FALSE->value];
 
         $technicalConclusions = TechnicalConclusion::query()
             ->with(['warrantyClaim'])
@@ -106,13 +108,11 @@ class TechnicalConclusionsController extends Controller
      */
     public function create(BuildTreeAction $buildTreeAction)
     {
-        $technicalConclusion = TechnicalConclusion::query()
-            ->tap(function ($query) use (&$appealTypes) {
-                $appealTypes = $query->pluck('appeal_type')->unique();
-            })->get();
+        $technicalConclusion = TechnicalConclusion::query()->get();
 
         $defectCodes = $buildTreeAction->getTree('App\Models\DefectCode');
         $symptomCodes = $buildTreeAction->getTree('App\Models\SymptomCode');
+        $appealTypes = AppealTypesEnums::getTypes();
 
         $title = 'Створення АТЕ';
 
@@ -161,14 +161,11 @@ class TechnicalConclusionsController extends Controller
      */
     public function edit(string $id, BuildTreeAction $buildTreeAction)
     {
-        $technicalConclusion = TechnicalConclusion::query()
-            ->tap(function ($query) use (&$appealTypes) {
-                $appealTypes = $query->pluck('appeal_type')->unique();
-            })
-            ->where('id', $id)->first();
+        $technicalConclusion = TechnicalConclusion::query()->where('id', $id)->first();
 
         $defectCodes = $buildTreeAction->getTree('App\Models\DefectCode');
         $symptomCodes = $buildTreeAction->getTree('App\Models\SymptomCode');
+        $appealTypes = AppealTypesEnums::getTypes();
 
         $title = 'Редагування АТЕ';
 

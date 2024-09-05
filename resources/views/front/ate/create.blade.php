@@ -149,7 +149,7 @@
                                         <label for="appeal_type">Тип звернення</label>
                                         <select name="appeal_type" id="appeal_type">
                                             <option value="">Тип звернення</option>
-                                            @if($appealTypes->isNotEmpty())
+                                            @if($appealTypes)
                                                 @foreach($appealTypes as $appealType)
                                                     <option value="{{ $appealType }}">{{ $appealType }}</option>
                                                 @endforeach
