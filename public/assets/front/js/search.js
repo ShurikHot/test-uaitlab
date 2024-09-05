@@ -202,22 +202,22 @@ function addRowToResults(item) {
         </div>
         <div class="cell">
             <div class="form-group">
-                <input type="text" value="${item.price}" readonly>
+                <input type="text" id="price-${item.articul}" value="${item.price}" readonly>
             </div>
         </div>
         <div class="cell">
             <div class="form-group _bg-white">
-                <input type="text" value="1">
+                <input type="text" id="qty-${item.articul}" value="1">
             </div>
         </div>
         <div class="cell">
             <div class="form-group">
-                <input type="text" value="${item.discount}" readonly>
+                <input type="text" id="discount-${item.articul}" value="${item.discount}" readonly>
             </div>
         </div>
         <div class="cell">
             <div class="form-group">
-                <input type="text" value="${item.price}" readonly>
+                <input type="text" id="total-${item.articul}" value="${item.price}" readonly>
             </div>
         </div>
         <div class="cell">
@@ -238,8 +238,22 @@ function addRowToResults(item) {
         removeRowFromResults(item.articul)
     })
 
-    searchResultsContainer.appendChild(row);
+    let qtyInput = row.querySelector(`#qty-${item.articul}`)
+    let priceInput = row.querySelector(`#price-${item.articul}`)
+    let discountInput = row.querySelector(`#discount-${item.articul}`)
+    let totalInput = row.querySelector(`#total-${item.articul}`)
 
+    function calculateTotal() {
+        let qty = parseFloat(qtyInput.value) || 0
+        let price = parseFloat(priceInput.value) || 0
+        let discount = parseFloat(discountInput.value) || 0
+        let total = qty * price * (1 - discount / 100)
+        totalInput.value = total.toFixed(2)
+    }
+
+    calculateTotal()
+
+    searchResultsContainer.appendChild(row);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
