@@ -9,82 +9,7 @@ document.getElementById('search_spareparts').addEventListener('input', function(
                 resultsContainer.innerHTML = ''
 
                 data.forEach(function(item) {
-                    let row = document.createElement('div')
-                    row.className = 'row search-result-row'
-                    row.setAttribute('data-index', item.articul);
-
-                    row.innerHTML = `
-                        <div class="cell">
-                            <div class="form-group _bg-white">
-                                <input type="text" value="${item.articul}" id="articul-${item.articul}" readOnly>
-                            </div>
-                        </div>
-                        <div class="cell">
-                            <div class="form-group">
-                                <input type="text" value="${item.product}" id="product-${item.articul}" readOnly>
-                            </div>
-                        </div>
-                        <div class="cell">
-                            <div class="form-group">
-                                <input type="text" value="${item.price}" id="price-${item.articul}" readOnly>
-                            </div>
-                        </div>
-
-                        <div class="cell">
-                            <div class="form-group">
-                                <input type="text" value="1" id="qty-${item.articul}" >
-                            </div>
-                        </div>
-
-                        <div class="cell">
-                            <div class="form-group">
-                                <input type="text" value="${item.discount}" id="discount-${item.articul}" readOnly>
-                            </div>
-                        </div>
-
-                        <div class="cell">
-                            <div class="form-group">
-                                <input type="text" value="" id="total-${item.articul}" readOnly>
-                            </div>
-                        </div>
-
-                        <div class="cell">
-                            <div class="form-group">
-                                <input type="text" value="" readOnly>
-                            </div>
-                        </div>
-
-                        <div class="cell">
-                            <button type="button" class="btn-border btn-blue btn-action">
-                                <span class="icon-plus" id="plus-${item.articul}"></span>
-                            </button>
-                        </div>
-                    `
-
-                    let qtyInput = row.querySelector(`#qty-${item.articul}`)
-                    let priceInput = row.querySelector(`#price-${item.articul}`)
-                    let discountInput = row.querySelector(`#discount-${item.articul}`)
-                    let totalInput = row.querySelector(`#total-${item.articul}`)
-                    let addButton = row.querySelector(`#plus-${item.articul}`)
-
-                    function calculateTotal() {
-                        let qty = parseFloat(qtyInput.value) || 0
-                        let price = parseFloat(priceInput.value) || 0
-                        let discount = parseFloat(discountInput.value) || 0
-                        let total = qty * price * (1 - discount / 100)
-                        totalInput.value = total.toFixed(2)
-                    }
-
-                    qtyInput.addEventListener('input', calculateTotal)
-
-                    calculateTotal()
-
-                    addButton.addEventListener('click', function() {
-                        addRowToAddedResults(item)
-                        removeRowFromResults(item.articul)
-                    })
-
-                    resultsContainer.appendChild(row)
+                    addRowToResults(item)
                 })
             })
             .catch(error => console.error('Error:', error))
@@ -192,32 +117,32 @@ function addRowToResults(item) {
     row.innerHTML = `
         <div class="cell">
             <div class="form-group _bg-white">
-                <input type="text" value="${item.articul}" readonly>
+                <input type="text" value="${item.articul}" id="articul-${item.articul}" readonly>
             </div>
         </div>
         <div class="cell">
             <div class="form-group">
-                <input type="text" value="${item.product}" readonly>
+                <input type="text" value="${item.product}" id="price-${item.articul}" readonly>
             </div>
         </div>
         <div class="cell">
             <div class="form-group">
-                <input type="text" id="price-${item.articul}" value="${item.price}" readonly>
+                <input type="text" value="${item.price}" id="price-${item.articul}" readonly>
             </div>
         </div>
         <div class="cell">
             <div class="form-group _bg-white">
-                <input type="text" id="qty-${item.articul}" value="1">
+                <input type="text" value="1" id="qty-${item.articul}">
             </div>
         </div>
         <div class="cell">
             <div class="form-group">
-                <input type="text" id="discount-${item.articul}" value="${item.discount}" readonly>
+                <input type="text" value="${item.discount}" id="discount-${item.articul}" readonly>
             </div>
         </div>
         <div class="cell">
             <div class="form-group">
-                <input type="text" id="total-${item.articul}" value="${item.price}" readonly>
+                <input type="text" value="${item.price}" id="total-${item.articul}" readonly>
             </div>
         </div>
         <div class="cell">
@@ -232,16 +157,15 @@ function addRowToResults(item) {
         </div>
     `;
 
+    let qtyInput = row.querySelector(`#qty-${item.articul}`)
+    let priceInput = row.querySelector(`#price-${item.articul}`)
+    let discountInput = row.querySelector(`#discount-${item.articul}`)
+    let totalInput = row.querySelector(`#total-${item.articul}`)
     let addButton = row.querySelector(`#plus-${item.articul}`)
     addButton.addEventListener('click', function() {
         addRowToAddedResults(item)
         removeRowFromResults(item.articul)
     })
-
-    let qtyInput = row.querySelector(`#qty-${item.articul}`)
-    let priceInput = row.querySelector(`#price-${item.articul}`)
-    let discountInput = row.querySelector(`#discount-${item.articul}`)
-    let totalInput = row.querySelector(`#total-${item.articul}`)
 
     function calculateTotal() {
         let qty = parseFloat(qtyInput.value) || 0
@@ -255,41 +179,6 @@ function addRowToResults(item) {
 
     searchResultsContainer.appendChild(row);
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    const removeButtons = document.querySelectorAll('.btn-action');
-
-    removeButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const articul = this.querySelector('.icon-minus').id.split('-')[1];
-            removeRowFromAdded(articul);
-            const item = {
-                articul: articul,
-                product: this.closest('.row').querySelector('input[name*="[product]"]').value,
-                price: this.closest('.row').querySelector('input[name*="[price]"]').value,
-                qty: this.closest('.row').querySelector('input[name*="[qty]"]').value,
-                discount: this.closest('.row').querySelector('input[name*="[discount]"]').value
-            };
-
-            const qtyInput = this.closest('.row').querySelector(`#added-qty-${articul}`);
-            const priceInput = this.closest('.row').querySelector(`#added-price-${articul}`);
-            const discountInput = this.closest('.row').querySelector(`#added-discount-${articul}`);
-            const totalInput = this.closest('.row').querySelector(`#added-total-${articul}`);
-
-            function calculateTotal() {
-                const qty = parseFloat(qtyInput.value) || 0;
-                const price = parseFloat(priceInput.value) || 0;
-                const discount = parseFloat(discountInput.value) || 0;
-                const total = qty * price * (1 - discount / 100);
-                totalInput.value = total.toFixed(2);
-            }
-
-            qtyInput.addEventListener('input', calculateTotal);
-
-            calculateTotal();
-        });
-    });
-});
 
 document.getElementById('serviceWorkSelect').addEventListener('change', function() {
     const selectedOption = this.options[this.selectedIndex];

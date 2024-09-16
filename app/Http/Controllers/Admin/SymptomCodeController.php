@@ -4,23 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actions\BuildTreeAction;
 use App\Actions\CodeNumberAction;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreSymptomCodeRequest;
-use App\Http\Requests\UpdateSymptomCodeRequest;
 use App\Models\SymptomCode;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
-class SymptomCodeController extends Controller
+class SymptomCodeController extends CodeController
 {
+    protected string $viewFolder = 'symptom-codes';
+    protected string $model = SymptomCode::class;
+    protected string $table = 'symptom_codes';
+    protected string $customTitle = ' :: Довідник кодів симптомів';
     /**
      * Display a listing of the resource.
      */
     public function index(BuildTreeAction $buildTreeAction)
     {
-        $tree = $buildTreeAction->getTree('App\Models\SymptomCode');
-        $customTitle = ' :: Довідник кодів симптомів';
-
-        return view('admin.catalog.symptom-codes.index', compact('tree', 'customTitle'));
+        return parent::index($buildTreeAction);
     }
 
     /**
@@ -28,29 +27,15 @@ class SymptomCodeController extends Controller
      */
     public function create(BuildTreeAction $buildTreeAction)
     {
-        $tree = $buildTreeAction->getTree('App\Models\SymptomCode');
-        $customTitle = ' :: Створення нового коду симптому';
-
-        return view('admin.catalog.symptom-codes.create', compact('tree', 'customTitle'));
+        return parent::create($buildTreeAction);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSymptomCodeRequest $request, CodeNumberAction $codeNumberAction): RedirectResponse
+    public function store(Request $request, CodeNumberAction $codeNumberAction): RedirectResponse
     {
-        $data = $request->validated();
-        $data['code_1C'] = $codeNumberAction->getCode();
-        $data['parent_id'] == 0 ? $data['is_folder'] = 1 : $data['is_folder'] = 0;
-        $data['parent_id'] = $data['parent_id'] ?: '0';
-        $data['created'] = date('Y-m-d H:m:s');
-
-        SymptomCode::query()->firstOrCreate(
-            ['code_1C' => $data['code_1C']],
-            $data
-        );
-
-        return redirect()->route('symptom-codes.index')->with('success', 'Новий код симптому створено');
+        return parent::store($request, $codeNumberAction);
     }
 
     /**
@@ -64,37 +49,24 @@ class SymptomCodeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BuildTreeAction $buildTreeAction, SymptomCode $symptomCode)
+    public function edit(BuildTreeAction $buildTreeAction, $codeModel)
     {
-        $tree = $buildTreeAction->getTree('App\Models\SymptomCode');
-        $customTitle = ' :: Редагування коду симптому';
-
-        $symptomCodeEdit = SymptomCode::query()->where('id', $symptomCode->id)->first()->toArray();
-
-        return view('admin.catalog.symptom-codes.edit', compact('tree', 'symptomCodeEdit', 'customTitle'));
+        return parent::edit($buildTreeAction, $codeModel);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSymptomCodeRequest $request, SymptomCode $symptomCode): RedirectResponse
+    public function update(Request $request, $codeModel): RedirectResponse
     {
-        $data = $request->validated();
-        $data['parent_id'] == 0 ? $data['is_folder'] = 1 : $data['is_folder'] = 0;
-        $data['edited'] = date('Y-m-d H:m:s');
-
-        $symptomCode->update($data);
-
-        return redirect()->route('symptom-codes.index')->with('success', 'Інформація оновлена');
+        return parent::update($request, $codeModel);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SymptomCode $symptomCode): RedirectResponse
+    public function destroy($codeModel): RedirectResponse
     {
-        $symptomCode->delete();
-
-        return redirect()->route('symptom-codes.index')->with('success', 'Запис симптому видалено');
+        return parent::destroy($codeModel);
     }
 }

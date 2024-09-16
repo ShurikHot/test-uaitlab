@@ -18,25 +18,25 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-body" bis_skin_checked="1">
-                    @if($defectCodeEdit)
+                    @if($codeEdit)
 
-                        <form action="{{ route('defect-codes.update', $defectCodeEdit['id']) }}" method="POST">
+                        <form action="{{ route('defect-codes.update', $codeEdit['id']) }}" method="POST">
                             @csrf
-                            @method('PUT')
+                            @method('PATCH')
 
                             <div class="form-group">
                                 <label for="id">ID</label>
-                                <input type="text" class="form-control" id="id" name="id" value="{{ $defectCodeEdit['id'] ?? '' }}" readonly>
+                                <input type="text" class="form-control" id="id" name="id" value="{{ $codeEdit['id'] ?? '' }}" readonly>
                             </div>
 
                             <div class="form-group">
                                 <label for="code_1C">Code 1С</label>
-                                <input type="text" class="form-control" id="code_1C" name="code_1C" value="{{ old('code_1C', $defectCodeEdit['code_1C'] ?? '') }}" readonly>
+                                <input type="text" class="form-control" id="code_1C" name="code_1C" value="{{ old('code_1C', $codeEdit['code_1C'] ?? '') }}" readonly>
                             </div>
 
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $defectCodeEdit['name'] ?? '') }}">
+                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $codeEdit['name'] ?? '') }}">
                             </div>
 
                             <div class="form-group">
@@ -44,7 +44,7 @@
                                 <select class="form-control" id="parent_id" name="parent_id">
                                     <option value="">No parent</option>
                                     @foreach($tree as $item)
-                                        <option value="{{ $item['code_1C'] }}" {{ (old('parent_id', $defectCodeEdit['parent_id'] ?? '') == $item['code_1C']) ? 'selected' : '' }}>
+                                        <option value="{{ $item['code_1C'] }}" {{ (old('parent_id', $codeEdit['parent_id'] ?? '') == $item['code_1C']) ? 'selected' : '' }}>
                                             {{ $item['name'] }}
                                         </option>
                                     @endforeach
@@ -52,12 +52,12 @@
                             </div>
 
                             <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="is_folder" name="is_folder" {{ old('is_folder', $defectCodeEdit['is_folder'] ?? false) ? 'checked' : '' }} disabled>
+                                <input type="checkbox" class="form-check-input" id="is_folder" name="is_folder" {{ old('is_folder', $codeEdit['is_folder'] ?? false) ? 'checked' : '' }} disabled>
                                 <label class="form-check-label" for="is_folder">Folder</label>
                             </div>
 
                             <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="is_deleted" name="is_deleted" {{ old('is_deleted', $defectCodeEdit['is_deleted'] ?? false) ? 'checked' : '' }} disabled>
+                                <input type="checkbox" class="form-check-input" id="is_deleted" name="is_deleted" {{ old('is_deleted', $codeEdit['is_deleted'] ?? false) ? 'checked' : '' }} disabled>
                                 <label class="form-check-label" for="is_deleted">Deleted</label>
                             </div>
 
