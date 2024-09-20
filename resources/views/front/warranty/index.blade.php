@@ -170,7 +170,7 @@
                                             <div class="td">
                                                 <a href="" class="btn-action icon-pdf"></a>
                                                 <a href="" class="btn-action icon-message _inactive"></a>
-    {{--                                            <a href="" class="btn-action icon-message _notification"></a>--}}
+                                                <a href="" class="btn-action icon-message _notification"></a>
                                             </div>
                                         </a>
                                     </div>

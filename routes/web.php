@@ -45,3 +45,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'crm'], function () {
     Route::get('/search_spareparts', SearchSparePartsController::class)->name('search_spareparts');
     Route::get('/search_serviceworks', SearchServiceWorksController::class)->name('search_serviceworks');
 });
+
+Route::get('/docs/api-specification-yaml', function () {
+    return response()->file(public_path('/api-docs/api_specification.yaml'));
+});

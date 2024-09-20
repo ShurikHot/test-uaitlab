@@ -66,7 +66,7 @@ class WarrantyClaimsController extends Controller
         $to = min($warranties->currentPage() * $warranties->perPage(), $warranties->total());
         $totalPages = ceil($warranties->total() / $warranties->perPage());
 
-        $statuses = [StatusEnums::DONE->value, StatusEnums::FALSE->value];
+        $statuses = StatusEnums::getStatuses();
         $title = 'Гарантійні заяви';
 
         return view('front.warranty.index', compact(
