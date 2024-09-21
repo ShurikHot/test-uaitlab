@@ -77,7 +77,7 @@ or use shurikhot/test-uaitlab:latest from DockerHub:
 
 <img src="https://i.postimg.cc/nhFKyPMC/01.png" alt="">
 <img src="https://i.postimg.cc/zDTnVrgy/02.png" alt="">
-<img src="https://i.postimg.cc/vHzfttXM/03.png" alt="">
+<img src="https://i.postimg.cc/PxQ5n2C5/03.png" alt="">
 <img src="https://i.postimg.cc/9QQT8wN9/04.png" alt="">
 <img src="https://i.postimg.cc/wj4NSxSG/05.png" alt="">
 <img src="https://i.postimg.cc/5tHz1dJN/06.png" alt="">
