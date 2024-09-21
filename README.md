@@ -73,10 +73,16 @@ or use shurikhot/test-uaitlab:latest from DockerHub:
 #### Реализація
 - в адмін-панелі відбувається імпорт необхідних таблиць та довідників, додавання необхідних користувачів
 - у фронт-частині реалізовані необхідні сторінки для перегляду журналів заявок та актів,  створення та редагування окремих записів, пагінація, сортування та фільтрація
-- при редагуванні чи створенні гарантійної заявки реалізоване додавання виконаних робіт та використаних запчастинза допомогою повнотекстового пошуку (MeiliSearch) 
+- при редагуванні чи створенні гарантійної заявки реалізоване додавання виконаних робіт та використаних запчастин за допомогою повнотекстового пошуку (MeiliSearch) 
 
-<img src="https://i.postimg.cc/BQRcKRRL/01.png" alt="">
-
+<img src="https://i.postimg.cc/nhFKyPMC/01.png" alt="">
+<img src="https://i.postimg.cc/3xpjCnHL/02.png" alt="">
+<img src="https://i.postimg.cc/W1Rg3gJ0/03.png" alt="">
+<img src="https://i.postimg.cc/pdRjQvCT/04.png" alt="">
+<img src="https://i.postimg.cc/JnhBgQ9C/05.png" alt="">
+<img src="https://i.postimg.cc/RCynsKd2/06.png" alt="">
+<img src="https://i.postimg.cc/44m8qCky/07.png" alt="">
+<img src="https://i.postimg.cc/QMYQJtMb/08.png" alt="">
 
 ### API-документація
 
