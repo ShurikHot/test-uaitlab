@@ -6,19 +6,20 @@
 - create .env from .env.example
 - docker-compose up -d
 - docker-compose exec app php artisan migrate:fresh --seed
-- docker-compose exec app php artisan scout:import "App\Models\SpareParts"
 - "Імпортувати данні з таблиць"
 - "Імпортувати довідники"
+- docker-compose exec app php artisan scout:import "App\Models\SpareParts"
 
 or use shurikhot/test-uaitlab:latest from DockerHub:
+- install Docker Desktop
 - docker run --name temp_container -d shurikhot/test-uaitlab:latest
 - docker cp temp_container:/var/www/ d:\test
 - cd www
 - docker-compose up -d
 - docker-compose exec app php artisan migrate:fresh --seed
-- docker-compose exec app php artisan scout:import "App\Models\SpareParts"
 - "Імпортувати данні з таблиць"
 - "Імпортувати довідники"
+- docker-compose exec app php artisan scout:import "App\Models\SpareParts"
 
 #### Завдання:
 
@@ -86,4 +87,3 @@ or use shurikhot/test-uaitlab:latest from DockerHub:
 ### API-документація
 
 - http://BASE_URL/docs/api-specification-yaml
-
