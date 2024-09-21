@@ -76,13 +76,13 @@ or use shurikhot/test-uaitlab:latest from DockerHub:
 - при редагуванні чи створенні гарантійної заявки реалізоване додавання виконаних робіт та використаних запчастин за допомогою повнотекстового пошуку (MeiliSearch) 
 
 <img src="https://i.postimg.cc/nhFKyPMC/01.png" alt="">
-<img src="https://i.postimg.cc/3xpjCnHL/02.png" alt="">
-<img src="https://i.postimg.cc/W1Rg3gJ0/03.png" alt="">
-<img src="https://i.postimg.cc/pdRjQvCT/04.png" alt="">
-<img src="https://i.postimg.cc/JnhBgQ9C/05.png" alt="">
-<img src="https://i.postimg.cc/RCynsKd2/06.png" alt="">
-<img src="https://i.postimg.cc/44m8qCky/07.png" alt="">
-<img src="https://i.postimg.cc/QMYQJtMb/08.png" alt="">
+<img src="https://i.postimg.cc/zDTnVrgy/02.png" alt="">
+<img src="https://i.postimg.cc/vHzfttXM/03.png" alt="">
+<img src="https://i.postimg.cc/9QQT8wN9/04.png" alt="">
+<img src="https://i.postimg.cc/wj4NSxSG/05.png" alt="">
+<img src="https://i.postimg.cc/5tHz1dJN/06.png" alt="">
+<img src="https://i.postimg.cc/VN3CkGs9/07.png" alt="">
+<img src="https://i.postimg.cc/hjT7zLhk/08.png" alt="">
 
 ### API-документація
 
