@@ -36,7 +36,7 @@ services:
         container_name: project_db
 
     meilisearch:
-        image: getmeili/meilisearch:v0.28
+        image: getmeili/meilisearch:latest
         ports:
             - "7700:7700"
         volumes:
