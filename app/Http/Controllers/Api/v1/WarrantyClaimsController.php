@@ -71,7 +71,7 @@ class WarrantyClaimsController extends Controller
 
         try {
             $warrantyClaim = DB::transaction(function () use ($data, $codeNumberAction) {
-                /*створення гарантийної заявки*/
+                /*створення гарантійної заявки*/
                 $warrantyClaimData = [
                     'code_1c' => $codeNumberAction->getCode(),
                     'number_1c' => $codeNumberAction->getNumber(),
