@@ -6,6 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "elasticsearch/elasticsearch": "^8.15",
+        "fakerphp/faker": "^1.23.1",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^10.10",
@@ -13,8 +15,7 @@
         "laravel/scout": "^10.11",
         "laravel/tinker": "^2.8",
         "maatwebsite/excel": "^3.1",
-        "meilisearch/meilisearch-php": "^1.10",
-        "fakerphp/faker": "^1.23.1"
+        "meilisearch/meilisearch-php": "^1.10"
     },
     "require-dev": {
         "laravel/pint": "^1.0",

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\CodeNumberAction;
+use App\Contracts\SparePartsIndexInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSparePartRequest;
 use App\Http\Requests\UpdateSparePartRequest;
 use App\Models\SpareParts;
-use App\Models\WarrantyClaimServiceWork;
-use Illuminate\Http\Request;
 
 class SparePartsController extends Controller
 {
@@ -36,15 +35,17 @@ class SparePartsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSparePartRequest $request, CodeNumberAction $codeNumberAction)
+    public function store(StoreSparePartRequest $request, CodeNumberAction $codeNumberAction, SparePartsIndexInterface $sparePartsIndex)
     {
         $data = $request->validated();
         $data['code_1c'] = $codeNumberAction->getCode();
 
-        SpareParts::query()->firstOrCreate(
+        $part = SpareParts::query()->firstOrCreate(
             ['code_1c' => $data['code_1c']],
             $data
         );
+
+        $sparePartsIndex->indexPart($part);
 
         return redirect()->route('parts.index')->with('success', 'Нова запчастина створена');
     }
@@ -71,10 +72,12 @@ class SparePartsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSparePartRequest $request, string $id)
+    public function update(UpdateSparePartRequest $request, SparePartsIndexInterface $sparePartsIndex, string $id)
     {
         $data = $request->validated();
         $part = SpareParts::query()->where('id', $id)->first();
+
+        $sparePartsIndex->updatePart($part);
 
         $part->update($data);
 

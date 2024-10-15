@@ -8,7 +8,6 @@
 - docker-compose exec app php artisan migrate:fresh --seed
 - "Імпортувати данні з таблиць"
 - "Імпортувати довідники"
-- docker-compose exec app php artisan scout:import "App\Models\SpareParts"
 
 or use shurikhot/test-uaitlab:latest from DockerHub:
 - install Docker Desktop
@@ -19,7 +18,6 @@ or use shurikhot/test-uaitlab:latest from DockerHub:
 - docker-compose exec app php artisan migrate:fresh --seed
 - "Імпортувати данні з таблиць"
 - "Імпортувати довідники"
-- docker-compose exec app php artisan scout:import "App\Models\SpareParts"
 
 #### Завдання:
 
@@ -73,7 +71,7 @@ or use shurikhot/test-uaitlab:latest from DockerHub:
 #### Реализація
 - в адмін-панелі відбувається імпорт необхідних таблиць та довідників, додавання необхідних користувачів
 - у фронт-частині реалізовані необхідні сторінки для перегляду журналів заявок та актів,  створення та редагування окремих записів, пагінація, сортування та фільтрація
-- при редагуванні чи створенні гарантійної заявки реалізоване додавання виконаних робіт та використаних запчастин за допомогою повнотекстового пошуку (MeiliSearch) 
+- при редагуванні чи створенні гарантійної заявки реалізоване додавання виконаних робіт та використаних запчастин за допомогою повнотекстового пошуку (MeiliSearch або Elasticsearch) 
 
 <img src="https://i.postimg.cc/nhFKyPMC/01.png" alt="">
 <img src="https://i.postimg.cc/zDTnVrgy/02.png" alt="">

@@ -8,8 +8,7 @@ use App\Http\Controllers\Admin\SymptomCodeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\v1\TokenController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Crm\SearchServiceWorksController;
-use App\Http\Controllers\Crm\SearchSparePartsController;
+use App\Http\Controllers\Crm\Search\SearchController;
 use App\Http\Controllers\Crm\TechnicalConclusionsController;
 use App\Http\Controllers\Crm\WarrantyClaimsController;
 use App\Http\Controllers\ImportCatalogsController;
@@ -42,8 +41,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'crm'], function () {
     Route::resource('/warranty', WarrantyClaimsController::class);
     Route::resource('/ate', TechnicalConclusionsController::class);
 
-    Route::get('/search_spareparts', SearchSparePartsController::class)->name('search_spareparts');
-    Route::get('/search_serviceworks', SearchServiceWorksController::class)->name('search_serviceworks');
+    Route::get('/search_spareparts', SearchController::class)->name('search_spareparts');
+//    Route::get('/search_serviceworks', SearchServiceWorksController::class)->name('search_serviceworks');
 });
 
 Route::get('/docs/api-specification-yaml', function () {

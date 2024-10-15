@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\SparePartsIndexInterface;
 use App\Jobs\ImportSqlToDBJob;
 use App\Models\ServiceWorks;
 use App\Models\SpareParts;
@@ -10,6 +11,12 @@ use App\Models\WarrantyClaimSparepart;
 
 class ImportCatalogsController extends Controller
 {
+    protected $sparePartsIndex;
+    public function __construct(SparePartsIndexInterface $sparePartsIndex)
+    {
+        $this->sparePartsIndex = $sparePartsIndex;
+    }
+
     public function import()
     {
         $this->importWorks();
@@ -41,5 +48,7 @@ class ImportCatalogsController extends Controller
             ->unique('code_1c')
             ->toArray();
         SpareParts::query()->insertOrIgnore($parts);
+
+        $this->sparePartsIndex->createIndex();
     }
 }
