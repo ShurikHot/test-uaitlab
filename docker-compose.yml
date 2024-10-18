@@ -37,10 +37,42 @@ services:
 
     meilisearch:
         image: getmeili/meilisearch:latest
+        container_name: meilisearch
         ports:
             - "7700:7700"
         volumes:
             - meilisearch_data:/meili_data
 
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+        container_name: elasticsearch
+        environment:
+            - discovery.type=single-node
+            - xpack.security.enabled=false
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+        volumes:
+            - es_data:/usr/share/elasticsearch/data
+    kibana:
+        container_name: kibana
+        image: docker.elastic.co/kibana/kibana:8.2.3
+        environment:
+            - ELASTICSEARCH_HOST=elasticsearch:9200
+        ports:
+            - "5601:5601"
+        depends_on:
+            - elasticsearch
+        volumes:
+            - es_data:/usr/share/elasticsearch/data
+
 volumes:
     meilisearch_data:
+    es_data:
+        driver: local
