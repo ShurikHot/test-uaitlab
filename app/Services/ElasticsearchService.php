@@ -30,7 +30,7 @@ class ElasticsearchService implements SearchServiceInterface
             ],
         ];
 
-        if ($this->client->indices()->exists(['index' => $indexName])) {
+        if ($this->client->indices()->exists(['index' => $indexName])->getReasonPhrase() == 'OK') {
             $this->client->indices()->delete(['index' => $indexName]);
         }
 
@@ -70,4 +70,3 @@ class ElasticsearchService implements SearchServiceInterface
         return $this->client->search($params);
     }
 }
-

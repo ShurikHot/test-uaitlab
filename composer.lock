@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9bee7dc96e0d515fbcf49e8b4bb7321",
+    "content-hash": "e05487721bb6607f94add84f2cf8e52e",
     "packages": [
         {
             "name": "brick/math",
@@ -647,16 +647,16 @@
         },
         {
             "name": "elasticsearch/elasticsearch",
-            "version": "v8.15.0",
+            "version": "v8.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elastic/elasticsearch-php.git",
-                "reference": "34c2444fa8d4c3e6c8b009bd8dea90bca007203b"
+                "reference": "ab0fdb43f9e69f0d0539028d8b0b56cdf3328d85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/34c2444fa8d4c3e6c8b009bd8dea90bca007203b",
-                "reference": "34c2444fa8d4c3e6c8b009bd8dea90bca007203b",
+                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/ab0fdb43f9e69f0d0539028d8b0b56cdf3328d85",
+                "reference": "ab0fdb43f9e69f0d0539028d8b0b56cdf3328d85",
                 "shasum": ""
             },
             "require": {
@@ -699,9 +699,9 @@
             ],
             "support": {
                 "issues": "https://github.com/elastic/elasticsearch-php/issues",
-                "source": "https://github.com/elastic/elasticsearch-php/tree/v8.15.0"
+                "source": "https://github.com/elastic/elasticsearch-php/tree/v8.16.0"
             },
-            "time": "2024-08-14T14:32:50+00:00"
+            "time": "2024-11-14T22:23:33+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
